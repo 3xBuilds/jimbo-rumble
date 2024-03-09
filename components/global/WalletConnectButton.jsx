@@ -3,7 +3,6 @@
 import usePhantomProvider from "@/hooks/usePhantomProvider"
 import { useEffect, useState } from "react";
 
-
 const WalletConnectButton = () => {
   const [provider] = usePhantomProvider();
   const [publicKey, setPublicKey] = useState(null);
@@ -14,7 +13,7 @@ const WalletConnectButton = () => {
     try {
       await provider?.connect();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -24,7 +23,7 @@ const WalletConnectButton = () => {
     try {
       await provider?.disconnect();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -33,7 +32,7 @@ const WalletConnectButton = () => {
 
     provider?.connect({ onlyIfTrusted: true })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
 
     provider?.on('connect', (publicKey) => {
@@ -43,6 +42,17 @@ const WalletConnectButton = () => {
     provider?.on('disconnect', () => {
       setPublicKey(null);
     });
+
+    provider?.on('accountChanged', (publicKey) => {
+      if (publicKey) {
+        setPublicKey(publicKey);
+      } else {
+        provider.connect().catch((error) => {
+          console.error('Failed to reconnect:', error);
+        });
+      }
+    });
+
   }, [provider]);
 
   return (
