@@ -1,10 +1,62 @@
-import React from 'react'
+"use client"
+
+import usePhantomProvider from "@/hooks/usePhantomProvider"
+import { useEffect, useState } from "react";
+
 
 const WalletConnectButton = () => {
+  const [provider] = usePhantomProvider();
+  const [publicKey, setPublicKey] = useState(null);
+
+  const handleConnect = async () => {
+    if (!provider) throw new Error("Phantom wallet not installed");
+
+    try {
+      await provider?.connect();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDisconnect = async () => {
+    if (!provider) throw new Error("Phantom wallet not installed");
+
+    try {
+      await provider?.disconnect();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (!provider) return;
+
+    provider?.connect({ onlyIfTrusted: true })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    provider?.on('connect', (publicKey) => {
+      setPublicKey(publicKey);
+    });
+
+    provider?.on('disconnect', () => {
+      setPublicKey(null);
+    });
+  }, [provider]);
+
   return (
-    <button className=" cursor-pointer rounded-l-full px-8 pr-12 py-3 absolute top-4 right-0 z-10 h-12 transform translate-x-5 transition-all duration-300 ease-in-out hover:translate-x-0  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black">
-        Wallet Connect
-    </button>
+    <>
+      {provider?.isConnected ?
+        <button className=" cursor-pointer rounded-l-full px-8 pr-12 py-3 absolute top-4 right-0 z-10 h-12 transform translate-x-5 transition-all duration-300 ease-in-out hover:translate-x-0  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleDisconnect}>
+          {publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6)}
+        </button> :
+        <button className=" cursor-pointer rounded-l-full px-8 pr-12 py-3 absolute top-4 right-0 z-10 h-12 transform translate-x-5 transition-all duration-300 ease-in-out hover:translate-x-0  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleConnect}>
+          Wallet Connect
+        </button>
+      }
+
+    </>
   )
 }
 

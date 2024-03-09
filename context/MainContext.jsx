@@ -11,6 +11,7 @@ const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
   const [loader, setLoader] = useState(false);
+  
 
   return (
     <GlobalContext.Provider value={{ loader, setLoader}}>
