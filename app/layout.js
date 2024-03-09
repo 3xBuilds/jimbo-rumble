@@ -4,6 +4,7 @@ import Providers from "@/utils/Providers";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Background from "@/components/global/Background";
+import WalletConnectButton from "@/components/global/WalletConnectButton";
 
 const zen = Zen_Dots({ subsets: ["latin"], weight: ['400'] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <ToastContainer />
           <Background/>
+          <WalletConnectButton/>
           {children}
         </Providers>
       </body>

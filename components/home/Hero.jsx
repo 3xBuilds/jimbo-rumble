@@ -1,10 +1,14 @@
 import Image from 'next/image'
 import avatar from '../../assets/characters/war4.png'
 import { Bungee } from "next/font/google";
+import { useRouter } from 'next/navigation';
 
 const bungee = Bungee({ subsets: ["latin"], weight: ['400'] });
 
 const Hero = () => {
+
+  const router = useRouter();
+
   return (
     <div className="flex flex-col">
         <div className="flex flex-row flex-wrap justify-center items-center gap-5">
@@ -14,10 +18,9 @@ const Hero = () => {
                 <p className="text-[2.5vw] leading-none text-jimbo-green ">BATTLE GROUNDS</p>
             </div>
         </div>
-        <button className=" cursor-pointer rounded-full self-end px-8 py-3 w-fit transform transition-all duration-300 ease-in-out hover:translate-y-1 text-black bg-gradient-to-br from-jimbo-green to-jimbo-blue">
+        <button onClick={()=>{router.push("/play")}} className=" cursor-pointer rounded-full self-end px-8 py-3 w-fit transform transition-all duration-300 ease-in-out hover:translate-y-1 text-black bg-gradient-to-br from-jimbo-green to-jimbo-blue">
             PLAY NOW
         </button>
-        
     </div>
   )
 }
