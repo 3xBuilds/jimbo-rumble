@@ -9,9 +9,14 @@ module.exports = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        jimbo: {
+          green: "#88FBB0",
+          black: "#181818",
+          blue: "#779DFF"
+        }
+      }
     },
   },
   plugins: [],
