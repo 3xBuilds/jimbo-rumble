@@ -4,7 +4,7 @@ import React from 'react'
 const Play = () => {
   return (
     <div className="flex flex-col">
-      <h3 className="text-jimbo-green text-left">Current Fighters (26)</h3>
+      <h3 className="text-jimbo-green text-left max-md:text-center">Current Fighters (26)</h3>
 
       <div className="flex flex-row gap-2 mt-2 noscr">
         <NFTCard username="Needle" nftname="#Jimbo234" image="https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/814" type={"selected"}/>
@@ -16,7 +16,7 @@ const Play = () => {
 
       <div className="bg-jimbo-green/20 h-[2px] w-full my-4"></div>
 
-      <h3 className="text-jimbo-green text-left">Select Your NFT to Play</h3>
+      <h3 className="text-jimbo-green text-left max-md:text-center">Select Your NFT to Play</h3>
 
       <div className="flex flex-row gap-2 mt-2 noscr">
         <NFTCard username="Sayak" nftname="#Jimbo234" image="https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/821" type={"chosen"}/>

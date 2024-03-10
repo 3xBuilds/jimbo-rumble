@@ -1,5 +1,6 @@
 "use client"
 import Timer from '@/components/global/Timer'
+import WalletConnectButton from '@/components/global/WalletConnectButton';
 import { Bungee } from "next/font/google";
 import { useRouter } from 'next/navigation';
 const bungee = Bungee({ subsets: ["latin"], weight: ['400'] });
@@ -7,13 +8,16 @@ const bungee = Bungee({ subsets: ["latin"], weight: ['400'] });
 
 const layout = ({ children }) => {
   return (
-    <div className="flex flex-col items-center pt-3 w-screen h-screen">
-        <HomeLogo/>
-        <div><Timer/></div>
-        <div className="border-2 rounded-3xl overflow-hidden noscr bg-black/30 border-jimbo-green w-[90%] h-[80%] p-5 px-8">
-            {children}
-        </div>
-    </div>
+    <>
+      <div className="max-md:hidden"><WalletConnectButton/></div>
+      <div className="flex flex-col items-center pt-3 w-screen h-screen overflow-hidden">
+          <div className="max-md:hidden"><HomeLogo/></div>
+          <div><Timer/></div>
+          <div className="border-2 rounded-3xl overflow-hidden noscr bg-black/30 border-jimbo-green w-[90%] max-md:w-[98%] h-[80%] p-5 px-8 max-md:px-2">
+              {children}
+          </div>
+      </div>
+    </>
   )
 }
 
