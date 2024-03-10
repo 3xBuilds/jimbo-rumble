@@ -1,13 +1,13 @@
 
-function startGame() {
+export function startGame() {
 
     const players = [
-        { name: "Risav", revives: 0, alive: true },
+        { name: "Needle", revives: 0, alive: true },
         { name: "Sayak", revives: 0, alive: true },
         { name: "Aritra", revives: 0, alive: true },
-        { name: "Sampurna", revives: 0, alive: true },
-        { name: "Manila", revives: 0, alive: true },
-        { name: "Soosan", revives: 0, alive: true }
+        { name: "Ryan", revives: 0, alive: true },
+        { name: "Jeff", revives: 0, alive: true },
+        { name: "Elon", revives: 0, alive: true }
     ];
 
     function show() { 
@@ -35,8 +35,8 @@ function startGame() {
         dead.push(victim);
         alive.splice(randomVictimIndex, 1);
       
-        console.log(`${killer.name} killed ${victim.name} this round`);
-        return {killer, victim};
+        // console.log(`${killer.name} killed ${victim.name} this round`);
+        return `${killer.name} killed ${victim.name}`;
     }
     
     function revive() {
@@ -50,8 +50,8 @@ function startGame() {
         alive.push(player);
         dead.splice(randomIndex, 1);
 
-        console.log(player.name, " was magically revived");
-        return player;
+        // console.log(player.name, " was magically revived");
+        return `${player.name} was magically revived`;
       }
     
       return null;
@@ -65,9 +65,11 @@ function startGame() {
     let rounds = 0;
     const reviveStartRound = Math.floor(players.length/2);
     const reviveEndRound = players.length-1;
+    const messages = [];
 
     while (alive.length > 1) {
         rounds++;
+        let message = "";
       
         if (
             rounds >= reviveStartRound
@@ -76,19 +78,23 @@ function startGame() {
             )
         {
           if (Math.random() < 0.5) {
-            kill();
+            message = kill();
           } else {
-            const revivedPlayer = revive();
-            if (!revivedPlayer) kill();
+            message = revive();
+            if (!message) message = kill();
           }
         } else {
-          kill();
+          message = kill();
         }
-      }
+        messages.push(message);
+    }
       
-      console.log("------The last survivor is", alive[0].name);
+      // console.log("------The last survivor is", alive[0].name);
+      messages.push(`------The last survivor is ${alive[0].name}`);
+      // console.log(messages);
+      
       reset();
-      return rounds;
+      return messages;
 }
 
 startGame();

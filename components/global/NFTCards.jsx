@@ -1,6 +1,10 @@
+"use client"
 import Image from "next/image"
+import { useRouter } from "next/navigation";
 
 const NFTCard = ({username, nftname, type, image}) => {
+
+  const router = useRouter();
 
   if(type==="user")return (
     <div className={`border-[1px] border-jimbo-green flex flex-col justify-between rounded-lg w-52 min-w-52 p-2 pb-0 bg-jimbo-green/20`}>
@@ -19,7 +23,9 @@ const NFTCard = ({username, nftname, type, image}) => {
             {image && <Image width={600} height={600} src={image} className="w-full h-full object-cover"/>}
         </div>
         <h3 className="text-white text-center mt-2 leading-none">0.1 <span className="text-jimbo-green">SOL</span></h3>
-        <button className="w-full rounded-md bg-gradient-to-br from-jimbo-green border-jimbo-green border-[1px] to-jimbo-black text-black hover:brightness-125 cursor-pointer py-1.5 my-2">JOIN NOW</button>
+        <button onClick={()=>{
+          router.push("/battle");
+        }} className="w-full rounded-md bg-gradient-to-br from-jimbo-green border-jimbo-green border-[1px] to-jimbo-black text-black hover:brightness-125 cursor-pointer py-1.5 my-2">JOIN NOW</button>
     </div>
   )
 

@@ -10,7 +10,7 @@ const layout = ({ children }) => {
     <div className="flex flex-col items-center pt-3 w-screen h-screen">
         <HomeLogo/>
         <div><Timer/></div>
-        <div className="border-2 rounded-3xl bg-black/30 border-jimbo-green w-[90%] h-[80%] p-5 px-8">
+        <div className="border-2 rounded-3xl overflow-hidden noscr bg-black/30 border-jimbo-green w-[90%] h-[80%] p-5 px-8">
             {children}
         </div>
     </div>
