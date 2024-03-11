@@ -1,11 +1,14 @@
 "use client"
 
+import { useEffect } from "react";
+
 import usePhantomProvider from "@/hooks/usePhantomProvider"
-import { useEffect, useState } from "react";
+
+import { useGlobalContext } from "@/context/MainContext";
 
 const WalletConnectButton = () => {
-  const [provider] = usePhantomProvider();
-  const [publicKey, setPublicKey] = useState(null);
+  const {provider} = usePhantomProvider();
+  const {publicKey, setPublicKey} = useGlobalContext();
 
   const handleConnect = async () => {
     if (!provider) throw new Error("Phantom wallet not installed");

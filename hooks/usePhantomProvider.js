@@ -18,7 +18,7 @@ const usePhantomProvider = () => {
         }
     }, []);
 
-    return [provider];
+    return {provider};
 };
 
 export default usePhantomProvider;
