@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className=" w-screen h-screen overflow-hidden ">
+    <html lang="en" className=" w-screen h-screen overflow-hidden bg-black ">
       <body className={zen.className + " w-screen h-screen overflow-hidden "}>
         <Providers>
           <ToastContainer />
