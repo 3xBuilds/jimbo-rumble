@@ -14,7 +14,7 @@ const usePhantomProvider = () => {
             }
         }
         else {
-            throw new Error("Phantom wallet not installed");
+            console.log("Phantom wallet not installed");
         }
     }, []);
 
