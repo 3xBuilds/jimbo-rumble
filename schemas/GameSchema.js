@@ -2,17 +2,29 @@ import mongoose, {Schema, model, models} from 'mongoose';
 
 const GameSchema = new Schema({
     id: mongoose.Schema.Types.ObjectId,
-    status: String, // upcoming, ongoing, halted, ended
+    status: {
+        type: String,
+        default: "upcoming"
+    }, // upcoming, ongoing, halted, ended
     players: {
         type: [ mongoose.Schema.Types.ObjectId ],
         required: true
     },
     winner: String,
-    fee: Number,
-    revivalFee: Number,
+    fee: {
+        type: Number,
+        default: 0
+    },
+    revivalFee: {
+        type: Number,
+        default: 0
+    },
     battleStartTime: String,
     regCloseTime: String,
-    reviveLimit: Number,
+    reviveLimit: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: Date.now

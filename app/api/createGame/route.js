@@ -9,7 +9,10 @@ export async function POST(req) {
         const body = await req.json();
         const {fee, revivalFee, battleStartTime, regClosingTime, reviveLimit} = body;
 
-        const dateExists = Game.findOne(battleStartTime);
+        const dateExists = await Game.findOne(
+            { battleStartTime }
+        );
+        console.log("dateexist", dateExists);
 
         if(dateExists != null){
             return new NextResponse(JSON.stringify({success: false, error: "Game already scheduled"}), { status: 500 });
@@ -20,7 +23,6 @@ export async function POST(req) {
             })
             return new NextResponse(JSON.stringify({success: true, message: "Successfully Created Game", game: game}), { status: 200 });
         }
-
     }
     catch (error) {
         return new NextResponse(JSON.stringify(error), {
