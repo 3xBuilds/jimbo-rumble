@@ -19,8 +19,14 @@ const GameSchema = new Schema({
         type: Number,
         default: 0
     },
-    battleStartTime: String,
-    regCloseTime: String,
+    battleStartTime: {
+        type: String,
+        default: ""
+    },
+    regCloseTime: {
+        type: String,
+        default: ""
+    },
     reviveLimit: {
         type: Number,
         default: 0

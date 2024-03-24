@@ -2,7 +2,8 @@ import mongoose, {Schema, model, models} from 'mongoose';
 
 const subSchema = new mongoose.Schema({
     dialogue: String,
-    timeStamp: Number
+    timeStamp: Number,
+    killed: String
   });
 
 const DialogueSchema = new mongoose.Schema({

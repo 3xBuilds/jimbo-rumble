@@ -19,3 +19,27 @@ export async function GET(req) {
         });
     }
 }
+
+//write a patch request to edit fields in a user document
+export async function PATCH(req) {
+    try{
+        const walletId = req.nextUrl.pathname.split("/")[3];
+        
+        const body = await req.json();
+        const {username} = body;
+
+        await connectToDB();
+        const user = await User.findOneAndUpdate({walletId},
+            {username},
+            {new: true}
+        )
+        return new NextResponse(JSON.stringify({
+            user
+        }), { status: 200 });
+    }
+    catch (error) {
+        return new NextResponse(JSON.stringify(error), {
+            status: 500,
+        });
+    }
+}

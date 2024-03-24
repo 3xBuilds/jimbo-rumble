@@ -12,11 +12,11 @@ export async function POST(req) {
         const dateExists = await Game.findOne(
             { battleStartTime }
         );
-        console.log("dateexist", dateExists);
 
         if(dateExists != null){
             return new NextResponse(JSON.stringify({success: false, error: "Game already scheduled"}), { status: 500 });
         }
+        
         else{
             const game = await Game.create({
                 fee, revivalFee, battleStartTime, regClosingTime, reviveLimit
