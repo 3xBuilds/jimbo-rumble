@@ -6,10 +6,10 @@ const GameSchema = new Schema({
         type: String,
         default: "upcoming"
     }, // upcoming, ongoing, halted, ended
-    players: {
-        type: [ mongoose.Schema.Types.ObjectId ],
-        required: true
-    },
+    players: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Player',
+    }],
     winner: String,
     fee: {
         type: Number,

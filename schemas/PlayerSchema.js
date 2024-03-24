@@ -11,7 +11,10 @@ const PlayerSchema = new Schema({
         type: Number,
         required: true
     },
-    joinTime: String,
+    joinTime: {
+        type: Date,
+        default: Date.now
+    },
     isPaid: {
         type: Boolean,
         default: false
