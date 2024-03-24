@@ -1,8 +1,13 @@
 import mongoose, {Schema, model, models} from 'mongoose';
 
-const DialogueSchema = new Schema({
-    id: mongoose.Schema.Types.ObjectId,
+const subSchema = new mongoose.Schema({
     dialogue: String,
+    timeStamp: Number
+  });
+
+const DialogueSchema = new mongoose.Schema({
+    id: mongoose.Schema.Types.ObjectId,
+    dialogueArray: [subSchema],
     
   }, {collection: "Dialogue"})
 
