@@ -13,7 +13,11 @@ export async function GET(req) {
         const game = await Game.findById(id)
         .populate({
             path: 'players',
-            model: 'Player'
+            model: 'Player',
+            populate: {
+                path: 'userId',
+                model: 'User'
+            }
         });
 
         if(game == null){
