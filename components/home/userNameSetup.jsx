@@ -40,7 +40,7 @@ export default function UserNameSetup(){
             const wallet = publicKey.toString();
             if(enteredName != ""){
                 console.log(wallet, enteredName);
-                await axios.post("/api/user/create", {walletId: wallet, username: enteredName}).then((res)=>{console.log(res);setUserNameModal(false); setUserName(res.data.user.username)}).catch((err)=>{console.log(err); 
+                await axios.post("/api/user/create", {walletId: wallet, username: enteredName}).then((res)=>{console.log(res);setUserNameModal(false); setUserName(res.data.user)}).catch((err)=>{console.log(err); 
                 if(err.response.status == 409){
                     setError(true);
                 }});
