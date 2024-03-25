@@ -7,10 +7,14 @@ import {
   useEffect
 } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const GlobalContext = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
+
+
+  const router = useRouter();
 
   const [loader, setLoader] = useState(false);
   const [publicKey, setPublicKey] = useState(null);
@@ -23,6 +27,10 @@ export const GlobalContextProvider = ({ children }) => {
 
       if(res.data.user){
         setUser(res.data.user);
+
+        if(res.data.user.walletId == "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"){
+          router.push("/admin");
+        }
       }else{
         setUser(null);
       }
