@@ -81,7 +81,7 @@ const WalletConnectButton = () => {
     <>
       {provider?.isConnected ?
         <button className=" cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleDisconnect}>
-          {userName == ""?publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Welcome! <span className="font-bold">{userName}</span></h2> }
+          {userName == ""?publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Hi! <span className="font-bold">{userName}</span></h2> }
         </button> :
         <button className=" cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleConnect}>
           Wallet Connect

@@ -54,6 +54,8 @@ export default function UserNameSetup(){
     useEffect(()=>{
         if(publicKey)
         checkExistingUser();
+    if(publicKey == null)
+    setUserNameModal(false);
     },[publicKey])
 
 
