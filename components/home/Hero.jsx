@@ -2,6 +2,7 @@ import Image from 'next/image'
 import avatar from '../../assets/characters/war4.png'
 import { Bungee } from "next/font/google";
 import { useRouter } from 'next/navigation';
+import UserNameSetup from './userNameSetup';
 
 const bungee = Bungee({ subsets: ["latin"], weight: ['400'] });
 
@@ -21,6 +22,8 @@ const Hero = () => {
         <button onClick={()=>{router.push("/play")}} className=" cursor-pointer rounded-full self-end px-8 py-3 w-fit transform transition-all duration-300 ease-in-out hover:translate-y-1 text-black bg-gradient-to-br from-jimbo-green to-jimbo-blue">
             PLAY NOW
         </button>
+
+        <UserNameSetup></UserNameSetup>
     </div>
   )
 }
