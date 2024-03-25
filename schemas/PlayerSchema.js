@@ -7,6 +7,10 @@ const PlayerSchema = new Schema({
         ref: 'User',
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     tokenId: {
         type: Number,
         required: true

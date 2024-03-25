@@ -13,11 +13,7 @@ export async function GET(req) {
         const game = await Game.findById(id)
         .populate({
             path: 'players',
-            model: 'Player',
-            populate: {
-                path: 'userId',
-                model: 'User'
-            }
+            model: 'Player'
         });
 
         if(game == null){
@@ -30,7 +26,6 @@ export async function GET(req) {
                 activePlayers
             }), { status: 200 });
         }
-        
     }
     catch (error) {
         return new NextResponse(JSON.stringify(error), {

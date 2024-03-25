@@ -12,11 +12,7 @@ export async function GET(req) {
         )
         .populate({
             path: 'players',
-            model: 'Player',
-            populate: {
-                path: 'userId',
-                model: 'User'
-            }
+            model: 'Player'
         });
 
         if(currentGame == null){

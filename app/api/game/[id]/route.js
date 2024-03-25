@@ -8,7 +8,14 @@ export async function GET(req) {
         const id = req.nextUrl.pathname.split("/")[3];
 
         await connectToDB();
-        const game = await Game.findById(id)
+        const game = await Game.findById(id).populate({
+            path: 'rounds',
+            model: 'Round'
+        })
+        .populate({
+            path: 'players',
+            model: 'Player'
+        });
 
         if(game == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game not found"}), { status: 404 });

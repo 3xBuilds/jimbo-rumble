@@ -22,7 +22,7 @@ export async function GET(req) {
             // }
         });
 
-        console.log("pupulate happening: ", game.players);
+        // console.log("pupulate happening: ", game.players);
 
         if(game == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game Not Found"}), { status: 404 });
@@ -35,7 +35,7 @@ export async function GET(req) {
 
             messages.map(async message => {
                 if(message.killed){
-                    // await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
+                    await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
                 }
                 message.timeStamp = startTime + addTime;
                 addTime += 2000;
@@ -43,7 +43,12 @@ export async function GET(req) {
 
             console.log("messages:", messages);
             // create Rouned Schema and add the messages array to it
-            // const round = await Round.create({messages: messages});
+            const round = await Round.create({messages: messages});
+
+            //add id of round in game document array rounds
+            game.status = "ongoing";
+            game.rounds.push(round._id);
+            await game.save();
 
             return new NextResponse(JSON.stringify({
                 messages
