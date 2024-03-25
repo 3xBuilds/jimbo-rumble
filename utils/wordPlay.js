@@ -21,7 +21,7 @@ export function startGame(playerList) {
       dead.push(victim);
       alive.splice(randomVictimIndex, 1);
     
-      return {message: `${killer.userId.username} killed ${victim.userId.username}`, killed: victim};
+      return {message: `${killer.username} killed ${victim.username}`, killed: victim};
     }
 
     let rounds = 0;
@@ -33,7 +33,7 @@ export function startGame(playerList) {
       messages.push(message);
     }
       
-    alive && messages.push({message: `------The last survivor is ${alive[0]?.userId.username}`, survivor: alive[0]});
+    alive && messages.push({message: `------The last survivor is ${alive[0]?.username}`, survivor: alive[0]});
     
     return messages;
 }

@@ -26,7 +26,6 @@ export async function GET(req) {
                 activePlayers
             }), { status: 200 });
         }
-        
     }
     catch (error) {
         return new NextResponse(JSON.stringify(error), {

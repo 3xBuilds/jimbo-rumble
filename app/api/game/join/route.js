@@ -33,6 +33,10 @@ export async function POST(req) {
 
             const userDetails = await User.findById(id);
 
+            if(userDetails == null){
+                return new NextResponse(JSON.stringify({success: false, error: "User Not Found"}), { status: 409 });
+            }
+
             //create a player document and then add its id to the players array i game document
             let newPlayer = await Player.create({
                 userId: id,

@@ -19,6 +19,10 @@ const GameSchema = new Schema({
         type: Number,
         default: 0
     },
+    rounds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Round',
+    }],
     battleStartTime: {
         type: String,
         default: ""
