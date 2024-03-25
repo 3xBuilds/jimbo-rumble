@@ -38,7 +38,7 @@ export const UpcomingGames = () => {
                     </div>
                     <h2 className='text-xl text-center'>Entrants: {i.players.length}</h2>
                     <div className='grid grid-flow-col text-center'>
-                        <h2>Registration Closes: {moment(Number(i.regsCloseTime)).format('LLL')}</h2>
+                        <h2>Registration Closes: {moment(Number(i.regCloseTime)).format('LLL')}</h2>
                         <h2>Starts on: {moment(Number(i.battleStartTime)).format('LLL')}</h2>
                         </div>
                 </div>
