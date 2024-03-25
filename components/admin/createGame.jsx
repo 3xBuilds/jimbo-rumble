@@ -21,7 +21,7 @@ export const CreateGame = () => {
             window.location.reload();
         }
         catch(err){
-            toast.error("Something Went Wrong");
+            toast.error(err.response.data.error);
             console.log(err);
         }
     }
