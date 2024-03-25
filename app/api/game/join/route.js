@@ -1,5 +1,6 @@
 import Game from "@/schemas/GameSchema";
 import Player from "@/schemas/PlayerSchema";
+import User from "@/schemas/UserSchema";
 import { connectToDB } from "@/utils/db";
 import { NextResponse } from "next/server";
 
@@ -30,10 +31,13 @@ export async function POST(req) {
                 return new NextResponse(JSON.stringify({success: false, error: "Already Joined"}), { status: 409 });
             }
 
+            const userDetails = await User.findById(id);
+
             //create a player document and then add its id to the players array i game document
             let newPlayer = await Player.create({
                 userId: id,
-                tokenId: tokenId
+                tokenId: tokenId,
+                username: userDetails.username
             });
 
             //edit the game document to add the id of the player in the players array in the currentGame
