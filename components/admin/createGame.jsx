@@ -5,6 +5,7 @@ import React from 'react'
 import  axios  from 'axios';
 import { useRouter } from 'next/navigation';
 import {useState } from 'react'
+import { toast } from 'react-toastify';
 
 export const CreateGame = () => {
 
@@ -16,8 +17,11 @@ export const CreateGame = () => {
         try{
             const res = await axios.post("/api/game/create", gameFields);
             console.log(res);
+            toast.success("Game Created");
+            window.location.reload();
         }
         catch(err){
+            toast.error("Something Went Wrong");
             console.log(err);
         }
     }
