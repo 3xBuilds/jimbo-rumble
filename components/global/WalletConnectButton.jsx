@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/MainContext";
 const WalletConnectButton = () => {
   const {provider} = usePhantomProvider();
   const {publicKey, setPublicKey} = useGlobalContext();
-  const {userName, setUserName} = useGlobalContext();
+  const {user} = useGlobalContext();
 
 
   const handleConnect = async () => {
@@ -19,18 +19,6 @@ const WalletConnectButton = () => {
       await provider?.connect();
     } catch (err) {
       console.error(err);
-    }
-  }
-
-  async function checkUser(){
-    try{
-      const wallet = String(publicKey)
-      const res = await axios.get("/api/user/"+wallet);
-
-      setUserName(res.data.user);
-    }
-    catch(err){
-      console.log(err);
     }
   }
 
@@ -72,16 +60,11 @@ const WalletConnectButton = () => {
 
   }, [provider]);
 
-  useEffect(()=>{
-    if(publicKey)
-    checkUser();
-  },[publicKey])
-
   return (
     <>
       {provider?.isConnected ?
         <button className=" cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleDisconnect}>
-          {userName == null?publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Hi! <span className="font-bold">{userName.username}</span></h2> }
+          {user == null? publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Hi! <span className="font-bold">{user.username}</span></h2> }
         </button> :
         <button className=" cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  text-black bg-gradient-to-br from-jimbo-green to-jimbo-black" onClick={handleConnect}>
           Wallet Connect
