@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-const NFTCard = ({id, username, nftname, type, image, setChosen, selected}) => {
+const NFTCard = ({id, username, nftname, type, image, setChosen, selected, joinBattle}) => {
 
   if(type==="user" && selected) return (
     <div className={`border-[1px] border-jimbo-green flex flex-col justify-between rounded-lg w-52 min-w-52 p-2 pb-0 bg-jimbo-green/30`}>
@@ -12,7 +12,7 @@ const NFTCard = ({id, username, nftname, type, image, setChosen, selected}) => {
         </div>
         <h3 className="text-white text-center mt-2 leading-none">0.1 <span className="text-jimbo-green">SOL</span></h3>
         <button onClick={()=>{
-          router.push("/battle");
+          joinBattle();
         }} className="w-full rounded-md bg-gradient-to-br from-jimbo-green border-jimbo-green border-[1px] to-jimbo-black text-black hover:brightness-125 cursor-pointer py-1.5 my-2">JOIN NOW</button>
     </div>
   )

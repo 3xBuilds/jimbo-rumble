@@ -34,8 +34,8 @@ export const GlobalContextProvider = ({ children }) => {
 
   useEffect(()=>{
     if(publicKey)
-    checkExistingUser();
-  },[publicKey, user])
+      checkExistingUser();
+  },[publicKey])
 
   return (
     <GlobalContext.Provider value={{ loader, setLoader, publicKey, setPublicKey, user, setUser}}>
