@@ -8,16 +8,22 @@ export async function GET(req) {
         const id = req.nextUrl.pathname.split("/")[3];
 
         await connectToDB();
-        const game = await Game.findOne(
-            { status: "upcoming" }
-        );
+        let currentGame = await Game.findOne({ status: "ongoing" });
 
-        if(game == null){
+        if (!currentGame) {
+            currentGame = await Game.findOne({ status: "halted" });
+        }
+
+        if (!currentGame) {
+            currentGame = await Game.findOne({ status: "upcoming" });
+        }
+
+        if(currentGame == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game not found"}), { status: 404 });
         }
 
         return new NextResponse(JSON.stringify({
-            game
+            currentGame
         }), { status: 200 });
     }
     catch (error) {
