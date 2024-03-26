@@ -29,19 +29,19 @@ export async function GET(req) {
         }
         else{
             const messages = startGame(game.players);
-
+            
             let addTime = 0;
             const startTime = Date.now();
-
+            
             messages.map(async message => {
-                if(message.killed){
-                    await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
-                }
                 message.timeStamp = startTime + addTime;
                 addTime += 2000;
-            });
-
-            console.log("messages:", messages);
+                if(message.killed){
+                    await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
+                    }
+                });
+                
+                console.log("messages:", messages);
             // create Rouned Schema and add the messages array to it
             const round = await Round.create({messages: messages});
 

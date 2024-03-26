@@ -28,9 +28,9 @@ export const GlobalContextProvider = ({ children }) => {
       if(res.data.user){
         setUser(res.data.user);
 
-        if(res.data.user.walletId == "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"){
-          router.push("/admin");
-        }
+        // if(res.data.user.walletId == "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"){
+        //   router.push("/admin");
+        // }
       }else{
         setUser(null);
       }

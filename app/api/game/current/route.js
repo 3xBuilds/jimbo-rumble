@@ -12,6 +12,9 @@ export async function GET(req) {
         .populate({
             path: 'rounds',
             model: 'Round'
+        }).populate({
+            path: 'players',
+            model: 'Player'
         });
 
         if (!currentGame) {
@@ -19,6 +22,9 @@ export async function GET(req) {
             .populate({
                 path: 'rounds',
                 model: 'Round'
+            }).populate({
+                path: 'players',
+                model: 'Player'
             });
         }
 
@@ -27,6 +33,9 @@ export async function GET(req) {
             .populate({
                 path: 'rounds',
                 model: 'Round'
+            }).populate({
+                path: 'players',
+                model: 'Player'
             });
         }
 

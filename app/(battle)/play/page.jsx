@@ -1,6 +1,6 @@
 "use client"
 
-import axois from "axios"
+import axios from "axios"
 
 import { useEffect, useState } from "react";
 import NFTCard from '@/components/global/NFTCards'
@@ -12,6 +12,8 @@ const Play = () => {
   const [chosen, setChosen] = useState("");
   const [players, setPlayers] = useState([]);
   const {user} = useGlobalContext();
+
+  const [entryFee, setEntryFee] = useState(0);
 
   if (NFTs) {
     var jimboNFTs = NFTs.filter(nft => nft.collection.address == "9HQSqsxGZPvkLtGRjHww9sp6S2MZCr6QfjR32LMXA7E5")
@@ -30,7 +32,7 @@ const Play = () => {
           id: user._id,
           tokenId: extractedNumber
         })
-        const res = axois.post("/api/game/join",{
+        const res = axios.post("/api/game/join",{
           id: user._id,
           tokenId: extractedNumber
         })
@@ -54,8 +56,18 @@ const Play = () => {
     }
   }
 
+  async function getCurrentGame(){
+    try{
+      await axios.get("/api/game/current").then((res)=>{console.log(res.data.game.fee); setEntryFee(res.data.game.fee)});
+      
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
   const getPlayers = () => {
-    axois.get("/api/game/players/active")
+    axios.get("/api/game/players/active")
       .then((res) => {
         setPlayers(res.data.activePlayers);
       })
@@ -63,11 +75,12 @@ const Play = () => {
 
   useEffect(()=>{
     getPlayers();
+    getCurrentGame()
   }, [user])
 
   return (
     <div className="flex flex-col">
-      <h3 className="text-jimbo-green text-left max-md:text-center">Current Fighters (26)</h3>
+      <h3 className="text-jimbo-green text-left max-md:text-center">Current Fighters ({players.length})</h3>
 
       <div className={`grid ${!players.some(player => player.userId == user._id) ? "grid-rows-1" : "grid-rows-2"} grid-flow-col items-center justify-start gap-2 mt-2 noscr h-full`}>
         {
@@ -75,11 +88,11 @@ const Play = () => {
             <NFTCard username={player.username} nftname={`#Jimbo${player.tokenId}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${player.tokenId}`} type={user._id==player.userId? "selected": ""} />
             ))
           }
+          {/* <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
           <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
           <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
           <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
+          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/> */}
       </div>
 
         {!players.some(player => player.userId == user._id) ? <>
@@ -89,7 +102,7 @@ const Play = () => {
 
           <div className="flex flex-row gap-2 mt-2 noscr">
             { jimboNFTs ? jimboNFTs?.map((nft) => <>
-              <NFTCard key={nft.name} id={nft.name} nftname={nft.name} joinBattle={joinBattle} image={nft.image_uri} type={"user"} setChosen={setChosen} selected={nft.name === chosen}/>
+              <NFTCard key={nft.name} id={nft.name} entryFee={entryFee} nftname={nft.name} joinBattle={joinBattle} image={nft.image_uri} type={"user"} setChosen={setChosen} selected={nft.name === chosen}/>
             </>) :
               <h1 className=" text-red-600">Loading...</h1>
             }
