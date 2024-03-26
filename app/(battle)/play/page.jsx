@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import NFTCard from '@/components/global/NFTCards'
 import useSolanaNFTFetch from '@/hooks/useSolanaNFTFetch'
 import { useGlobalContext } from "@/context/MainContext";
+import Link from "next/navigation"
 
 const Play = () => {
   const { NFTs } = useSolanaNFTFetch({ apiKey: "AkEA6RnkX6IwV-Ni" });
@@ -116,6 +117,7 @@ const Play = () => {
         </>:
         <>
           <h3 className="text-jimbo-green text-center text-xl max-md:text-center mt-8">You have already Joined</h3>
+          <button className="bg-jimbo-green/70 hover:bg-jimbo-green/80 duration-200 py-2 rounded-xl">Go to Battle</button>
         </>
         }
     </div>
