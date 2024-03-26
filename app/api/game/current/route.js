@@ -8,14 +8,26 @@ export async function GET(req) {
         const id = req.nextUrl.pathname.split("/")[3];
 
         await connectToDB();
-        let currentGame = await Game.findOne({ status: "ongoing" });
+        let currentGame = await Game.findOne({ status: "ongoing" })
+        .populate({
+            path: 'rounds',
+            model: 'Round'
+        });
 
         if (!currentGame) {
-            currentGame = await Game.findOne({ status: "halted" });
+            currentGame = await Game.findOne({ status: "halted" })
+            .populate({
+                path: 'rounds',
+                model: 'Round'
+            });
         }
 
         if (!currentGame) {
-            currentGame = await Game.findOne({ status: "upcoming" });
+            currentGame = await Game.findOne({ status: "upcoming" })
+            .populate({
+                path: 'rounds',
+                model: 'Round'
+            });
         }
 
         if(currentGame == null){
