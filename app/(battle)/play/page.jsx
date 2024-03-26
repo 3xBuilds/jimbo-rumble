@@ -59,7 +59,8 @@ const Play = () => {
   async function getCurrentGame(){
     try{
 
-      await axios.get("/api/game/current").then((res)=>{ setEntryFee(res.data.currentGame.fee)});
+      const res = await axios.get("/api/game/current");
+      setEntryFee(res.data.currentGame.fee);
       
     }
     catch(err){
