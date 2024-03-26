@@ -72,6 +72,7 @@ const Play = () => {
 
       axios.get("/api/game/players/active")
         .then((res) => {
+          console.log(res);
           setPlayers(res.data.activePlayers);
         }).catch((err)=>{
           console.log(err)
@@ -97,11 +98,7 @@ const Play = () => {
             <NFTCard username={player.username} nftname={`#Jimbo${player.tokenId}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${player.tokenId}`} type={user._id==player.userId? "selected": ""} />
             ))
           }
-          {/* <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/>
-          <NFTCard username={"hhrhrh"} nftname={`#Jimbo${203}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${203}`} type={""}/> */}
+          
       </div>
 
         {!players.some(player => player.userId == user._id) ? <>
