@@ -13,7 +13,7 @@ const Play = () => {
   const [players, setPlayers] = useState([]);
   const {user} = useGlobalContext();
 
-  const [entryFee, setEntryFee] = useState(0);
+  const [entryFee, setEntryFee] = useState(null);
 
   if (NFTs) {
     var jimboNFTs = NFTs.filter(nft => nft.collection.address == "9HQSqsxGZPvkLtGRjHww9sp6S2MZCr6QfjR32LMXA7E5")
@@ -69,10 +69,15 @@ const Play = () => {
   }
 
   const getPlayers = () => {
-    axios.get("/api/game/players/active")
-      .then((res) => {
-        setPlayers(res.data.activePlayers);
-      })
+
+      axios.get("/api/game/players/active")
+        .then((res) => {
+          setPlayers(res.data.activePlayers);
+        }).catch((err)=>{
+          console.log(err)
+        })
+
+  
   }
 
   useEffect(()=>{
@@ -80,6 +85,8 @@ const Play = () => {
     getCurrentGame()
   }, [user])
 
+
+  if(entryFee != null)
   return (
     <div className="flex flex-col">
       <h3 className="text-jimbo-green text-left max-md:text-center">Current Fighters ({players.length})</h3>
@@ -116,6 +123,14 @@ const Play = () => {
         }
     </div>
   )
+
+  else{
+    return(
+      <div className="w-full h-full items-center flex justify-center">
+        <h2 className="text-jimbo-green text-xl">No Games Scheduled!</h2>
+      </div>
+    )
+  }
 }
 
 export default Play

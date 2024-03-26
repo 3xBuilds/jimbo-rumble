@@ -35,7 +35,7 @@ export async function GET(req) {
             
             messages.map(async message => {
                 message.timeStamp = startTime + addTime;
-                addTime += 2000;
+                addTime += 3000;
                 if(message.killed){
                     await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
                     }
