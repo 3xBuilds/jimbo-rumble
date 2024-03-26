@@ -58,7 +58,8 @@ const Play = () => {
 
   async function getCurrentGame(){
     try{
-      await axios.get("/api/game/current").then((res)=>{console.log(res.data.game.fee); setEntryFee(res.data.game.fee)});
+
+      await axios.get("/api/game/current").then((res)=>{ setEntryFee(res.data.currentGame.fee)});
       
     }
     catch(err){
