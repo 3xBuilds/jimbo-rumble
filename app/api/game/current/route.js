@@ -2,10 +2,15 @@ import Game from "@/schemas/GameSchema";
 import User from "@/schemas/UserSchema";
 import { connectToDB } from "@/utils/db";
 import { NextResponse } from "next/server";
+import { revalidatePath } from 'next/cache';
 
 export async function GET(req) {
     try{
         const id = req.nextUrl.pathname.split("/")[3];
+
+        const path = request.nextUrl.searchParams.get('path') || '/'
+
+        revalidatePath(path)
 
         await connectToDB();
         let currentGame = await Game.findOne({ status: "ongoing" })
