@@ -6,10 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function GET(req) {
     try{
-        const id = req.nextUrl.pathname.split("/")[3];
-
-        const path = request.nextUrl.searchParams.get('path') || '/'
-
+        const path = req.nextUrl.pathname || '/';
         revalidatePath(path)
 
         await connectToDB();
