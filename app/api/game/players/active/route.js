@@ -8,7 +8,7 @@ export async function GET(req) {
     try{
         await connectToDB();
 
-        revalidatePath('/', 'layout')
+        revalidatePath('/', 'layout') 
         
         const currentGame = await Game.findOne(
             { status: "upcoming" }
@@ -17,12 +17,11 @@ export async function GET(req) {
             path: 'players',
             model: 'Player'
         });
-
+        
         if(currentGame == null){
             return new NextResponse(JSON.stringify({success: false, error: "No Game Scheduled Currently"}), { status: 404 });
         }
         else{
-
             const activePlayers = currentGame.players
 
             return new NextResponse(JSON.stringify({
