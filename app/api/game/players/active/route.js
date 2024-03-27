@@ -2,10 +2,13 @@ import Game from "@/schemas/GameSchema";
 import Player from "@/schemas/PlayerSchema";
 import { connectToDB } from "@/utils/db";
 import { NextResponse } from "next/server";
+import { revalidatePath } from 'next/cache'
 
 export async function GET(req) {
     try{
         await connectToDB();
+
+        revalidatePath('/', 'layout')
         
         const currentGame = await Game.findOne(
             { status: "upcoming" }
