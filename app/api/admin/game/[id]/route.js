@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function DELETE(req) {
     try{
         const id = req.nextUrl.pathname.split("/")[4];
-        console.log("id:", id);
 
         await connectToDB();
         const game = await Game.findByIdAndDelete(id);

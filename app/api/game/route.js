@@ -6,6 +6,10 @@ export async function GET(req) {
     try{
         await connectToDB();
         const games = await Game.find()
+        .populate({
+            path: 'players',
+            model: 'Player'
+        })
 
         return new NextResponse(JSON.stringify({
             games

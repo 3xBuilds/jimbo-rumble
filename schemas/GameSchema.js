@@ -1,4 +1,6 @@
 import mongoose, {Schema, model, models} from 'mongoose';
+import Player from './PlayerSchema';
+import Round from './RoundSchema';
 
 const GameSchema = new Schema({
     id: mongoose.Schema.Types.ObjectId,
@@ -8,7 +10,7 @@ const GameSchema = new Schema({
     }, // upcoming, ongoing, halted, ended
     players: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Player',
+        ref: Player,
     }],
     winner: String,
     fee: {
@@ -21,7 +23,7 @@ const GameSchema = new Schema({
     },
     rounds: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Round',
+        ref: Round,
     }],
     battleStartTime: {
         type: String,

@@ -1,10 +1,11 @@
 import mongoose, {Schema, model, models} from 'mongoose';
+import User from './UserSchema';
 
 const PlayerSchema = new Schema({
     id: mongoose.Schema.Types.ObjectId,
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: User,
         required: true
     },
     username: {
