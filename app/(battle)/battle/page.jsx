@@ -46,33 +46,24 @@ const page = () => {
         }
     }
 
-    async function parseGameDialogues(){
-        try{
-            const roundNo = game?.rounds.length - 1;
-            const messagesArr = game?.rounds[roundNo].messages;
-            let i = 0;
+    const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
-            for(let i = 0; i<messagesArr.length; i++){
-                if(messagesArr[i].timeStamp <= Date.now()){
-                    console.log(messagesArr[i].message);
-                    setDialogues(oldArr => [...oldArr , messagesArr[i]?.message]);
+    useEffect(() => {
+        const mess = game?.rounds[0]?.messages;
+        const intervalId = setInterval(() => {
+            const now = Date.now();
+            mess?.map((message, index) => {
+                if (now >= Number(message.timeStamp)) {
+                    setCurrentMessageIndex(index);
                 }
+            })} ,1000);
+        return () => clearInterval(intervalId);
+    }, [currentMessageIndex, game?.rounds[0]?.messages ]);
 
-                else{
-                    i--;
-                }
-            }
-
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    useEffect(()=>{
-        if(game)
-        parseGameDialogues();
-    },[game])
+    // useEffect(()=>{
+    //     if(game)
+    //     parseGameDialogues();
+    // },[game])
 
     useEffect(() => {
         if(user)
@@ -86,24 +77,23 @@ const page = () => {
         <Image src={war3} className="w-40 max-md:w-20 max-md:left-1 absolute bottom-5 left-5 transform -scale-x-100"/>
         <div className="w-[80%] text-white max-md:w-[98%] mx-auto flex flex-col-reverse gap-2">
 
-
             { game?.status == "ongoing" &&
-                dialogues.map((message, index) => {
+                game?.rounds[0]?.messages?.slice(0, currentMessageIndex + 1)?.map((message, index) => {
                     // if(Date.now() >= message.timeStamp){
-                        if(message?.startsWith("-----")) return (
+                        if(message?.message?.startsWith("-----")) return (
                             <div className="bg-jimbo-green/50 border-jimbo-green border-[1px] rounded-xl h-16 flex items-center justify-center">
-                                <p className="text-white text-sm text-center"> {message?.slice(6)}</p>
+                                <p className="text-white text-sm text-center"> {message?.message?.slice(6)}</p>
                             </div>)
                         else return (
                             <div key={index} className="bg-jimbo-green/10 rounded-xl h-16 flex items-center justify-center">
-                                <p className="text-white text-sm text-center"> {message} </p>
+                                <p className="text-white text-sm text-center"> {message?.message} </p>
                             </div>
                         )
                     // }
                 })
             }
 
-            {game?.status == "halted" && 
+            {/* {game?.status == "halted" && 
             <div className='text-center'>
                 <div className="bg-jimbo-green/50 border-jimbo-green border-[1px] rounded-xl h-16 flex items-center justify-center">
                     <p className="text-white text-sm text-center"> {game?.rounds[game.rounds.length - 1].messages[game?.rounds[0].messages.length - 1].message.slice(6)} </p>
@@ -113,7 +103,7 @@ const page = () => {
                  {!alive && <button className='bg-jimbo-green/80 px-4 mt-10 py-3 hover:bg-jimbo-green/70 duration-200 hover:translate-y-1 shadow-lg shadow-black hover:shadow-jimbo-green/30 border-white border-2 rounded-xl text-xl'>Revive | {game?.revivalFee} SOL</button>}
                 
                 </div>
-            }
+            } */}
         </div>
         
     </>

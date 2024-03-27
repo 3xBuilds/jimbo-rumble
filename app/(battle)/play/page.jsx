@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import NFTCard from '@/components/global/NFTCards'
 import useSolanaNFTFetch from '@/hooks/useSolanaNFTFetch'
 import { useGlobalContext } from "@/context/MainContext";
-import Link from "next/navigation"
+import Link, { useRouter } from "next/navigation"
 
 const Play = () => {
+
+  const router = useRouter();
   const { NFTs } = useSolanaNFTFetch({ apiKey: "AkEA6RnkX6IwV-Ni" });
   const [chosen, setChosen] = useState("");
   const [players, setPlayers] = useState([]);
@@ -93,7 +95,7 @@ const Play = () => {
     <div className="flex flex-col">
       <h3 className="text-jimbo-green text-left max-md:text-center">Current Fighters ({players.length})</h3>
 
-      <div className={`grid ${!players.some(player => player.userId == user._id) ? "grid-rows-1" : "grid-rows-2"} grid-flow-col items-center justify-start gap-2 mt-2 noscr h-full`}>
+      <div className={`grid ${!players.some(player => player.userId == user._id) || (players?.length <=11) ? "grid-rows-1" : "grid-rows-2"} grid-flow-col items-center justify-start gap-2 mt-2 noscr h-full`}>
         {
           players.map((player) => (
             <NFTCard username={player.username} nftname={`#Jimbo${player.tokenId}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${player.tokenId}`} type={user._id==player.userId? "selected": ""} />
@@ -116,8 +118,8 @@ const Play = () => {
           </div>
         </>:
         <>
-          <h3 className="text-jimbo-green text-center text-xl max-md:text-center mt-8">You have already Joined</h3>
-          <button className="bg-jimbo-green/70 hover:bg-jimbo-green/80 duration-200 py-2 rounded-xl">Go to Battle</button>
+          <h3 className="text-white text-center text-sm max-md:text-center mt-8 mb-2">You have already Joined</h3>
+          <button onClick={()=>{router.push("/battle")}} className="bg-jimbo-green/70 hover:bg-jimbo-green/80 duration-200 py-2 px-12 w-fit mx-auto rounded-2xl">Go to Battle</button>
         </>
         }
     </div>
