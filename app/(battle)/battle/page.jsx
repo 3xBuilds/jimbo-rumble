@@ -36,7 +36,6 @@ const page = () => {
                 }
             })
             setAlive(playerAlive[0]?.isAlive);
-            console.log("slice",res.data.currentGame.rounds.slice(0,-1));
             setPrevRounds(
                 res?.data?.currentGame?.rounds?.slice(0,-1)
             )
