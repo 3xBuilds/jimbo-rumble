@@ -16,13 +16,11 @@ export const CreateGame = () => {
     async function createGame(){
         try{
             const res = await axios.post("/api/game/create", gameFields);
-            console.log(res);
             toast.success("Game Created");
             window.location.reload();
         }
         catch(err){
             toast.error(err.response.data.error);
-            console.log(err);
         }
     }
 

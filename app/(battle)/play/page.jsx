@@ -33,31 +33,23 @@ const Play = () => {
       if (paySolana()) {
         const parts = chosen?.split("#");
         const extractedNumber = parts[1];
-        console.log({
-          id: user._id,
-          tokenId: extractedNumber
-        })
+
         const res = axios.post("/api/game/join",{
           id: user._id,
           tokenId: extractedNumber
         })
         .then((res) => {
-          console.log(res.data);
           toast.success(`You have joined the battle!`)
           getPlayers()
         })
         .catch((err) => {
-          console.log(err);
           toast.error(err.response.data.error)
         })
-        
-
-        console.log("Battle Joined")
       } else {
-        console.log("Payment Failed")
+        toast.success("Payment Failed")
       }
     } else {
-      console.log("Please select an NFT to play")
+      toast.success("Please select an NFT to play")
     }
   }
 
@@ -68,7 +60,10 @@ const Play = () => {
       setGame(res.data.currentGame)
     }
     catch(err){
-      console.log(err);
+      // toast.error("No Ongoing Battle")
+      if(err.response.status == 404){
+        router.push("/")
+      }
     }
   }
 
@@ -86,10 +81,8 @@ const Play = () => {
 
       axios.get("/api/game/players/active")
         .then((res) => {
-          console.log(res);
           setPlayers(res.data.activePlayers);
         }).catch((err)=>{
-          console.log(err)
         })
 
   

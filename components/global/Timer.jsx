@@ -28,7 +28,6 @@ const Timer = () => {
       });
     }
     catch(err){
-      console.log(err);
     }
   }
 
@@ -36,7 +35,7 @@ const Timer = () => {
     try{
       const momentTime = moment(Number(game?.battleStartTime)).fromNow();
       if(momentTime.includes("Invalid")) {
-        setTime("---");
+        setTime("Not Scheduled");
         return;
       }
       else if (momentTime.includes("in a few seconds")) {
@@ -56,7 +55,6 @@ const Timer = () => {
       }
     }
     catch(err){
-      console.log(err);
     }
   }
 

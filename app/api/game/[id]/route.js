@@ -50,7 +50,6 @@ export async function PATCH(req) {
         if(regClosingTime) game.regClosingTime = regClosingTime;
         if(reviveLimit) game.reviveLimit = reviveLimit;
 
-        console.log("gaame:", game);
         await game.save();
 
         return new NextResponse(JSON.stringify({

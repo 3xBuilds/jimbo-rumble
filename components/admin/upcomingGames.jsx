@@ -20,46 +20,40 @@ export const UpcomingGames = () => {
 
         }
         catch(err){
-            console.log(err)
         }
     }
 
     async function deleteGame(id){
         try{
-            console.log(id);
-            await axios.delete("/api/admin/game/"+id).then((res)=>{console.log(res); getGames();});
+            await axios.delete("/api/admin/game/"+id).then((res)=>{
+                getGames();
+            });
 
         }
         catch(err){
-            console.log(err);
         }
     }
 
     async function startGame(id){
         try{
-            console.log(id);
             await axios.get("/api/admin/game/"+id+"/start").then((res)=>{
-                console.log(res);
                 toast.success("Game Started Successfully");
             });
             getGames();
         }
         catch(err){
-            console.log(err);
             toast.error("Game could not start");
         }
     }
 
     async function endGame(id){
         try{
-            console.log(id);
             const res = await axios.get("/api/admin/game/"+id+"/end")
 
             toast.success(res.data.message);
             getGames();
         }
         catch(err){
-            console.log(err);
             toast.error(err.response.data.error);
         }
     }

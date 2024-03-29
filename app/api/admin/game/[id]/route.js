@@ -15,14 +15,8 @@ export async function DELETE(req) {
             return new NextResponse(JSON.stringify({success: false, error: "Game not found"}), { status: 404 });
         }
 
-        console.log(game);
-
-        //delete the players from players collection using mapping
-
-            const deletedPlayers = await Player.deleteMany({ _id: game.players })
-            console.log("play: ", deletedPlayers);
-            const deletedRounds = await Round.deleteMany({ _id: game.rounds })
-            console.log("rounds", deletedRounds);
+        const deletedPlayers = await Player.deleteMany({ _id: game.players })
+        const deletedRounds = await Round.deleteMany({ _id: game.rounds })
 
         return new NextResponse(JSON.stringify({success: true, message: "Game Deleted Successfully"}), { status: 200 });
     }
@@ -51,7 +45,6 @@ export async function PATCH(req) {
         if(regClosingTime) game.regClosingTime = regClosingTime;
         if(reviveLimit) game.reviveLimit = reviveLimit;
 
-        console.log("gaame:", game);
         await game.save();
 
         return new NextResponse(JSON.stringify({

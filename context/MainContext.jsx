@@ -36,7 +36,6 @@ export const GlobalContextProvider = ({ children }) => {
       }
     }
     catch(err){
-      console.log(err)
     }
   }
 

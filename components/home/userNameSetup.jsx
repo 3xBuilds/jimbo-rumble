@@ -28,7 +28,6 @@ export default function UserNameSetup(){
                 .then((res)=>{
                     setUser(res.data.user)})
                     .catch((err)=>{
-                        console.log(err); 
                     if(err.response.status == 409){
                         setError(err.response.data.error);
                     }
@@ -36,7 +35,6 @@ export default function UserNameSetup(){
             }
         }
         catch(err){
-            console.log(err);
         }
     }
 

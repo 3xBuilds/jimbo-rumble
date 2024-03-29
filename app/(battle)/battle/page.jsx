@@ -11,8 +11,11 @@ import war3 from '../../../assets/characters/war3.png'
 import war2 from '../../../assets/characters/war2.png'
 import { useGlobalContext } from '@/context/MainContext';
 import {toast} from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+
+    const router = useRouter();
 
 
     const [alive, setAlive] = useState(true);
@@ -45,19 +48,20 @@ const page = () => {
                 }
             })
             setAlive(playerAlive[0]?.isAlive);
-            console.log("revvvv: ", game?.reviveLimit , "---" , playerAlive[0]?.revives);
+
             setRevivesLeft(game?.reviveLimit - playerAlive[0]?.revives);
             setPrevRounds(
                 res?.data?.currentGame?.rounds?.slice(0,-1)
             )
             
-            
             }).catch((err)=>{
-                console.log(err);
+                // toast.error("No Ongoing Battle")
+                if(err.response.status == 404){
+                    router.push("/")
+                }
             });
         }
         catch(err){
-            console.log(err);
         }
     }
 
@@ -131,7 +135,6 @@ const page = () => {
             setTimeout(()=>setShowRevivePopup(true),3000);
         }
         if(currentMessageIndex>=game?.rounds[game?.rounds?.length-1]?.messages.length-1 && alive){
-            console.log("You are alive this round, wait for second round to start");
             setRevivalStopped(true);
             setSurvivalMessage("You Survived This Round")
         }
@@ -205,7 +208,6 @@ const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showR
     const revivePlayer = async () => {
         try{
             const res = await axios.post(`/api/user/revive/${id}`);
-            console.log(res);
             setAlive(true);
             toast.success("You are successfully revived");
             setShowRevivePopup(false);
@@ -213,7 +215,6 @@ const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showR
             setRevivesLeft(prev=>prev-1)
         }
         catch(err){
-            console.log(err);
             if(err?.response?.status == 409){
                 toast.error(err.response.data.error);
             }

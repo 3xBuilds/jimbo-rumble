@@ -13,13 +13,11 @@ export default function Home() {
   
   useEffect(() => {
     wsServer.onmessage = (event) => {
-      console.log("jushsdhd", event.data);
       setMessage((prev) => [...prev, `${event.data} from Server`]);
     }
   }, []);
 
   const sendMessage = () => {
-    console.log("hh");
     wsServer.send(` ${input} `);
   }
 
