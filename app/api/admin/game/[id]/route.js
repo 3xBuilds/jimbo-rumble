@@ -1,5 +1,6 @@
 import Game from "@/schemas/GameSchema";
-import User from "@/schemas/UserSchema";
+import Player from "@/schemas/PlayerSchema";
+import Round from "@/schemas/RoundSchema";
 import { connectToDB } from "@/utils/db";
 import { NextResponse } from "next/server";
 
@@ -14,7 +15,16 @@ export async function DELETE(req) {
             return new NextResponse(JSON.stringify({success: false, error: "Game not found"}), { status: 404 });
         }
 
-        return new NextResponse(JSON.stringify({success: true, error: "Game Deleted Successfully"}), { status: 200 });
+        console.log(game);
+
+        //delete the players from players collection using mapping
+
+            const deletedPlayers = await Player.deleteMany({ _id: game.players })
+            console.log("play: ", deletedPlayers);
+            const deletedRounds = await Round.deleteMany({ _id: game.rounds })
+            console.log("rounds", deletedRounds);
+
+        return new NextResponse(JSON.stringify({success: true, message: "Game Deleted Successfully"}), { status: 200 });
     }
     catch (error) {
         return new NextResponse(JSON.stringify(error), {
