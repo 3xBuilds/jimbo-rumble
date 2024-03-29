@@ -39,13 +39,20 @@ const Timer = () => {
         setTime("---");
         return;
       }
-      if(momentTime.includes("ago")){
+      else if (momentTime.includes("in a few seconds")) {
+        setTime(`${(moment.duration(Number(game?.battleStartTime) - Date.now())).seconds()} seconds`);
+        setTimePassed(false);
+        return;
+      }
+      else if(momentTime.includes("ago")){
         setTime(momentTime);
         setTimePassed(true);
+        return;
       }
       else{
         setTime(momentTime);
         setTimePassed(false);
+        return;
       }
     }
     catch(err){
