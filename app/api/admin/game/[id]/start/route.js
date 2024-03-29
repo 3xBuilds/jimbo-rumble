@@ -16,6 +16,10 @@ export async function GET(req) {
         .populate({
             path: 'players',
             model: 'Player',
+        })
+        .populate({
+            path: 'rounds',
+            model: 'Round'
         });
 
         if(game == null){
@@ -26,21 +30,31 @@ export async function GET(req) {
             
             let addTime = 0;
             let startTime = Date.now();
-            if( startTime < game.battleStartTime){
-                startTime = game.battleStartTime;
+
+            if(game.rounds?.length > 0){
+                startTime = game.rounds[game.rounds.length - 1].roundEndTime;
+            }else{
+                if( startTime < game.battleStartTime){
+                    startTime = game.battleStartTime;
+                }
             }
+
             
             messages.map(async message => {
                 message.timeStamp = Number(startTime) + addTime;
                 addTime += 3000;
                 if(message.killed){
                     await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});
-                    }
-                });
+                }
+            });
                 
                 console.log("messages:", messages);
             // create Rouned Schema and add the messages array to it
-            const round = await Round.create({messages: messages});
+            const round = await Round.create({
+                messages: messages,
+                revivalStopTime: (Number(startTime) + addTime + 120000), // 2mins
+                roundEndTime: (Number(startTime) + addTime + 240000) // (2+2)mins
+            });
 
             //add id of round in game document array rounds
             game.status = "ongoing";

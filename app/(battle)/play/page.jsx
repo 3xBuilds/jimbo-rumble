@@ -43,7 +43,7 @@ const Play = () => {
         .then((res) => {
           console.log(res.data);
           alert(`You have joined the battle!`)
-          window.location.reload();
+          getPlayers()
         })
         .catch((err) => {
           console.log(err);

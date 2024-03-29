@@ -19,8 +19,17 @@ const page = () => {
     const [game, setGame] = useState(null);
     const{user} = useGlobalContext();
     const [prevRounds, setPrevRounds] = useState(null);
+    const [roundEndTime, setRoundEndTime] = useState("");
+    const [revivalTime, setRevivalTime] = useState("");
+
+    const [revivalStopped, setRevivalStopped] = useState(false);
+    const [roundEnded, setRoundEnded] = useState(false);
     
     const [showRevivePopup, setShowRevivePopup] = useState(false);
+    const [showWaitPopup, setShowWaitPopup] = useState(true);
+    const [revivesLeft, setRevivesLeft] = useState(null);
+
+    const [survivalMessage, setSurvivalMessage] = useState("");
 
     const [dialogues, setDialogues] = useState([]);
     // const [battleProgress, setBattleProgress] = useState()
@@ -36,6 +45,8 @@ const page = () => {
                 }
             })
             setAlive(playerAlive[0]?.isAlive);
+            console.log("revvvv: ", game?.reviveLimit , "---" , playerAlive[0]?.revives);
+            setRevivesLeft(game?.reviveLimit - playerAlive[0]?.revives);
             setPrevRounds(
                 res?.data?.currentGame?.rounds?.slice(0,-1)
             )
@@ -65,13 +76,54 @@ const page = () => {
     }, [currentMessageIndex, game?.rounds[game?.rounds?.length-1]?.messages ]);
 
     useEffect(() => {
+        const intervalId = setInterval(() => {
+
+            revivalStopCountDown()
+            roundEndCountDown()
+
+            checkRevivalStopTime()
+            checkRoundEndStopTime()
+
+          } ,1000);
+        return () => clearInterval(intervalId);
+    }, [game]);
+
+    const checkRevivalStopTime = () => {
+        const now = Date.now();
+        if(Number(game?.rounds[game?.rounds?.length-1]?.revivalStopTime) <= now){
+            setShowRevivePopup(false);
+            setRevivalStopped(true);
+        }
+    }
+
+    const checkRoundEndStopTime = () => {
+        const now = Date.now();
+        if(Number(game?.rounds[game?.rounds?.length-1]?.roundEndTime) <= now){
+            setRoundEnded(true);
+        }
+    }
+
+    const revivalStopCountDown = () => {
+        setRevivalTime(` ${(moment.duration(Number(game?.rounds[game?.rounds?.length-1]?.revivalStopTime) - Date.now())).minutes()} : ${(moment.duration(Number(game?.rounds[game?.rounds?.length-1]?.revivalStopTime) - Date.now())).seconds().toString().padStart(2, '0')}`);
+    }
+    const roundEndCountDown = () => {
+        setRoundEndTime(`${(moment.duration(Number(game?.rounds[game?.rounds?.length-1]?.roundEndTime) - Date.now())).minutes()} : ${(moment.duration(Number(game?.rounds[game?.rounds?.length-1]?.roundEndTime) - Date.now())).seconds().toString().padStart(2, '0')}`);
+    }
+
+    useEffect(() => {
         if(user)
         getCurrentGame();
     } ,[user]);
 
     useEffect(()=>{
         revivePrompt();
-    }, [currentMessageIndex, alive])
+    }, [currentMessageIndex, alive]);
+
+    useEffect(()=>{
+        if(roundEnded){
+            getCurrentGame();
+        }
+    }, [roundEnded])
 
     const revivePrompt = () => {
         if(currentMessageIndex>=game?.rounds[game?.rounds?.length-1]?.messages.length-1 && !alive){
@@ -80,6 +132,8 @@ const page = () => {
         }
         if(currentMessageIndex>=game?.rounds[game?.rounds?.length-1]?.messages.length-1 && alive){
             console.log("You are alive this round, wait for second round to start");
+            setRevivalStopped(true);
+            setSurvivalMessage("You Survived This Round")
         }
     }
 
@@ -90,14 +144,17 @@ const page = () => {
             
         <div className="w-[80%] text-white max-md:w-[98%] mx-auto flex flex-col-reverse gap-2">
 
-            <h2 className='text-center text-jimbo-green mb-2'>------ {"Round-" + (game?.rounds?.length)} ------</h2>
+            { game?.status !== "ended" && game && <h2 className='text-center text-jimbo-green mb-2'>------ {"Round-" + (game?.rounds?.length)} ------</h2>}
 
-            { game?.status == "ongoing" &&
+            { game?.status == "ended" && <h2 className='text-center text-jimbo-green'>------ Game Ended ------</h2>}
+
+            { 
+            // game?.status == "ongoing" &&
                 game?.rounds[game?.rounds?.length-1]?.messages?.slice(0, currentMessageIndex + 1)?.map((message, index) => {
                     // if(Date.now() >= message.timeStamp){
                         if(message?.message?.startsWith("-----")) return (
                             <div className="bg-jimbo-green/50 border-jimbo-green border-[1px] rounded-xl h-16 flex items-center justify-center">
-                                <p className="text-white text-sm text-center"> {message?.message?.slice(6)}{currentMessageIndex}</p>
+                                <p className="text-white text-sm text-center"> {message?.message?.slice(6)}</p>
                             </div>)
                         else return (
                             <div key={index} className="bg-jimbo-green/10 rounded-xl h-16 flex items-center justify-center">
@@ -110,16 +167,17 @@ const page = () => {
         </div>
 
         <div className="w-[80%] text-white max-md:w-[98%] mx-auto flex flex-col-reverse gap-2">
-        {
+        { 
+        // game?.status == "ongoing" &&
             prevRounds?.map((round, index) => (
                 <>
-                        <h2 className='text-center text-jimbo-green'>------ {"Round-" + (index+1)} ------</h2>
+                        {game?.status !== "ended" && <h2 className='text-center text-jimbo-green'>------ {"Round-" + (index+1)} ------</h2>}
                     { game?.status == "ongoing" &&
                         round?.messages?.map((message, index) => {
                             // if(Date.now() >= message.timeStamp){
                                 if(message?.message?.startsWith("-----")) return (
                                     <div className="bg-jimbo-green/50 border-jimbo-green border-[1px] rounded-xl h-16 flex items-center justify-center">
-                                        <p className="text-white text-sm text-center"> {message?.message?.slice(6)}{currentMessageIndex}</p>
+                                        <p className="text-white text-sm text-center"> {message?.message?.slice(6)}</p>
                                     </div>)
                                 else return (
                                     <div key={index} className="bg-jimbo-green/10 rounded-xl h-16 flex items-center justify-center">
@@ -133,13 +191,16 @@ const page = () => {
             ))
         }
         </div>
-        {showRevivePopup && <RevivePopup game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
-        
+
+        {game?.status == "ongoing" && <>
+        {showRevivePopup && !revivalStopped && <RevivePopup setRevivesLeft={setRevivesLeft} revivesLeft={revivesLeft} revivalStopped={revivalStopped} revivalTime={revivalTime} game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
+        {showWaitPopup && revivalStopped && !roundEnded && <WaitPopup revivesLeft={revivesLeft} survivalMessage={survivalMessage} roundEndTime={roundEndTime} game={game} id={user._id} showWaitPopup={showWaitPopup} setShowWaitPopup={setShowWaitPopup} />}
+        </>}
     </>
   )
 }
 
-const RevivePopup = ({game, id, showRevivePopup, setShowRevivePopup, setAlive}) => {
+const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showRevivePopup, revivalTime, setShowRevivePopup, setAlive}) => {
 
     const revivePlayer = async () => {
         try{
@@ -147,11 +208,13 @@ const RevivePopup = ({game, id, showRevivePopup, setShowRevivePopup, setAlive}) 
             console.log(res);
             setAlive(true);
             toast.success("You are successfully revived");
-
+            setShowRevivePopup(false);
+            revivalStopped(true);
+            setRevivesLeft(prev=>prev-1)
         }
         catch(err){
             console.log(err);
-            if(err.response.status == 409){
+            if(err?.response?.status == 409){
                 toast.error(err.response.data.error);
             }
         }
@@ -161,6 +224,10 @@ const RevivePopup = ({game, id, showRevivePopup, setShowRevivePopup, setAlive}) 
     return (
         <div className='w-screen h-screen fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='text-center flex flex-col items-center justify-center'>
+
+                <h3 className='text-white bg-white/10 rounded-lg px-4 py-2 mb-2 border-[1px] border-jimbo-green'> Revive within: <span className='text-jimbo-green text-2xl mt-3'>{revivalTime}</span></h3>
+                <h3 className='text-white'>  Revives Left : <span className='text-jimbo-green text-base mt-2'>  {revivesLeft} </span></h3>
+                <br />
                 <h3 className='text-white'> You were killed this round <br /> You can revive now with <br /> <span className='text-jimbo-green text-2xl mt-3'>{game?.revivalFee || "--"} SOL</span></h3>
                 <button onClick={()=>{revivePlayer()}} className='cursor-pointer mt-10 bg-jimbo-green/60 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Revive Player</button>
                 <button onClick={()=>{setShowRevivePopup(false)}} className='cursor-pointer mt-2 bg-jimbo-green/30 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Spectate Game</button>
@@ -169,13 +236,15 @@ const RevivePopup = ({game, id, showRevivePopup, setShowRevivePopup, setAlive}) 
     )
 }
 
-const WaitPopup = ({game, id, showRevivePopup, setShowRevivePopup, setAlive}) => {
+const WaitPopup = ({game, id, roundEndTime, revivesLeft, showWaitPopup, survivalMessage, setShowWaitPopup}) => {
 
     return (
         <div className='w-screen h-screen fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='text-center flex flex-col items-center justify-center gap-10'>
-                <h3 className='text-white'> You were killed this round <br /> You can revive now with <br /> <span className='text-jimbo-green text-2xl mt-3'>{game?.revivalFee || "--"} SOL</span></h3>
-                <button onClick={()=>{revivePlayer()}} className='cursor-pointer bg-jimbo-green/60 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Revive Player</button>
+                <h3 className='text-white bg-white/10 rounded-lg px-4 py-2 border-[1px] border-jimbo-green'>  <span className='text-jimbo-green text-2xl'> {survivalMessage} </span></h3>
+                <h3 className='text-white'>  Revives Left : <span className='text-jimbo-green text-base'>  {revivesLeft} </span></h3>
+                <h3 className='text-white'> Next Round Starting in <br /> <span className='text-jimbo-green text-2xl mt-3'> {roundEndTime} </span></h3>
+                <button onClick={()=>{setShowWaitPopup(false)}} className='cursor-pointer mt-2 bg-jimbo-green/30 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Spectate Game</button>
             </div>
         </div>
     )

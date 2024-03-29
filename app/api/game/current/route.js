@@ -41,6 +41,17 @@ export async function GET(req) {
             });
         }
 
+        if (!currentGame) {
+            currentGame = await Game.findOne({ status: "ended" })
+            .populate({
+                path: 'rounds',
+                model: 'Round'
+            }).populate({
+                path: 'players',
+                model: 'Player'
+            });
+        }
+
         if(currentGame == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game not found"}), { status: 404 });
         }
