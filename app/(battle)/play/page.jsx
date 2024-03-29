@@ -7,6 +7,7 @@ import NFTCard from '@/components/global/NFTCards'
 import useSolanaNFTFetch from '@/hooks/useSolanaNFTFetch'
 import { useGlobalContext } from "@/context/MainContext";
 import Link, { useRouter } from "next/navigation"
+import {toast} from "react-toastify"
 
 const Play = () => {
 
@@ -42,12 +43,12 @@ const Play = () => {
         })
         .then((res) => {
           console.log(res.data);
-          alert(`You have joined the battle!`)
+          toast.success(`You have joined the battle!`)
           getPlayers()
         })
         .catch((err) => {
           console.log(err);
-          alert(err.response.data.error)
+          toast.error(err.response.data.error)
         })
         
 
