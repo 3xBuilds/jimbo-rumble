@@ -16,13 +16,7 @@ export async function GET(req) {
         .populate({
             path: 'players',
             model: 'Player',
-            // populate: {
-            //     path: 'userId',
-            //     model: 'User'
-            // }
         });
-
-        // console.log("pupulate happening: ", game.players);
 
         if(game == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game Not Found"}), { status: 404 });
@@ -31,10 +25,13 @@ export async function GET(req) {
             const messages = startGame(game.players);
             
             let addTime = 0;
-            const startTime = Date.now();
+            let startTime = Date.now();
+            if( startTime < game.battleStartTime){
+                startTime = game.battleStartTime;
+            }
             
             messages.map(async message => {
-                message.timeStamp = startTime + addTime;
+                message.timeStamp = Number(startTime) + addTime;
                 addTime += 3000;
                 if(message.killed){
                     await Player.findByIdAndUpdate(message.killed._id, {isAlive: false});

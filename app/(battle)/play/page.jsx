@@ -15,6 +15,7 @@ const Play = () => {
   const [chosen, setChosen] = useState("");
   const [players, setPlayers] = useState([]);
   const {user} = useGlobalContext();
+  const [game, setGame] = useState(null);
 
   const [entryFee, setEntryFee] = useState(null);
 
@@ -61,15 +62,24 @@ const Play = () => {
 
   async function getCurrentGame(){
     try{
-
       const res = await axios.get("/api/game/current");
       setEntryFee(res.data.currentGame.fee);
-      
+      setGame(res.data.currentGame)
     }
     catch(err){
       console.log(err);
     }
   }
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+        const now = Date.now()
+        if(now >= Number(game?.battleStartTime)){
+          router.push("/battle")
+        }
+      } ,1000);
+    return () => clearInterval(intervalId);
+  }, [game]);
 
   const getPlayers = () => {
 

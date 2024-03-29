@@ -55,7 +55,9 @@ export const UpcomingGames = () => {
         <div className='bg-black/40 rounded-xl px-6 py-3 w-[90%] max-h-[30rem] overflow-scroll noscr'>
             {upcomingGames.map((i)=>(
                 <div className={`my-4 p-3 rounded-xl ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-gray-400 "} ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-yellow-500 "} `}>
-                    {i.status == "upcoming" && <div>
+                    {
+                    // i.status == "upcoming" &&
+                    <div>
                         <button onClick={()=>{deleteGame(i._id)}} className='bg-red-500 hover:bg-red-400 float-left duration-200 px-2 py-2 rounded-2'><RiDeleteBin6Fill /></button>
                     <button onClick={()=>{startGame(i._id)}} className='bg-blue-500 hover:bg-blue-400 float-right duration-200 px-2 py-2 rounded-2'><FaFlag/></button>
                     </div>}

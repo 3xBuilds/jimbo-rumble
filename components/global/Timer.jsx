@@ -6,11 +6,26 @@ import moment from 'moment'
 
 const Timer = () => {
 
-  const[time,setTime] = useState("Not Scheduled")
+  const[time,setTime] = useState("Not Scheduled");
+  const [game, setGame] = useState(null);
+  const [timePassed, setTimePassed] = useState(false);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+        calculateTime(game);
+      } ,1000);
+    return () => clearInterval(intervalId);
+  }, [game]);
+
+  useEffect(()=>{
+    timeLeft();
+  },[])
 
   async function timeLeft(){
     try{
-      await axios.get("/api/game/current").then((res)=>{calculateTime(res.data.currentGame)});
+      await axios.get("/api/game/current").then((res)=>{
+        setGame(res.data.currentGame)
+      });
     }
     catch(err){
       console.log(err);
@@ -19,21 +34,30 @@ const Timer = () => {
 
   function calculateTime(game){
     try{
-      setTime(moment(Number(game?.battleStartTime)).fromNow())
+      const momentTime = moment(Number(game?.battleStartTime)).fromNow();
+      if(momentTime.includes("Invalid")) {
+        setTime("---");
+        return;
+      }
+      if(momentTime.includes("ago")){
+        setTime(momentTime);
+        setTimePassed(true);
+      }
+      else{
+        setTime(momentTime);
+        setTimePassed(false);
+      }
     }
-    catch{
+    catch(err){
       console.log(err);
     }
   }
 
-useEffect(()=>{
-  timeLeft();
-},[])
   return (
-    <div className="w-72 border-2 border-jimbo-green bg-jimbo-green/10 border-b-0 rounded-t-3xl flex flex-col items-center justify-center gap-1 text-center p-10 py-5 mt-2">
+    <div className={" w-80 border-2 border-jimbo-green bg-jimbo-green/10 border-b-0 rounded-t-3xl flex flex-col items-center justify-center gap-1 text-center p-10 py-5 mt-2 " }>
         <h3 className="text-xl text-white">{time}</h3>
         <div className="h-[1px] bg-white w-48"></div>
-        <h4 className="text-sm text-jimbo-green">BATTLE STARTS IN</h4>
+        <h4 className="text-sm text-jimbo-green">{timePassed ? "BATTLE STARTED" : "BATTLE STARTS IN"}</h4>
     </div>
   )
 }
