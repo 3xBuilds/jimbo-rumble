@@ -121,7 +121,7 @@ const page = () => {
 
     useEffect(()=>{
         if(roundEnded){
-            getCurrentGame();
+            window.location.reload();
         }
     }, [roundEnded])
 
@@ -242,7 +242,7 @@ const WaitPopup = ({game, id, roundEndTime, revivesLeft, showWaitPopup, survival
         <div className='w-screen h-screen fixed top-0 left-0 bg-black/20 backdrop-blur-lg flex items-center justify-center'>
             <div className='text-center flex flex-col items-center justify-center gap-10'>
                 <h3 className='text-white bg-white/10 rounded-lg px-4 py-2 border-[1px] border-jimbo-green'>  <span className='text-jimbo-green text-2xl'> {survivalMessage} </span></h3>
-                <h3 className='text-white'>  Revives Left : <span className='text-jimbo-green text-base'>  {revivesLeft} </span></h3>
+                {/* <h3 className='text-white'>  Revives Left : <span className='text-jimbo-green text-base'>  {revivesLeft} </span></h3> */}
                 <h3 className='text-white'> Next Round Starting in <br /> <span className='text-jimbo-green text-2xl mt-3'> {roundEndTime} </span></h3>
                 <button onClick={()=>{setShowWaitPopup(false)}} className='cursor-pointer mt-2 bg-jimbo-green/30 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Spectate Game</button>
             </div>
