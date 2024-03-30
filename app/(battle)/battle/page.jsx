@@ -211,6 +211,7 @@ const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showR
 
     const revivePlayer = async () => {
         try{
+            console.log("hi", game?.revivalFee * 1000000000)
             await paySolana(provider, game?.revivalFee * 1000000000)
             await axios.post(`/api/user/revive/${id}`);
             setAlive(true);
