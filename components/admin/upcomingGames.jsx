@@ -90,7 +90,8 @@ export const UpcomingGames = () => {
     async function deleteGame(id){
         try{
             await axios.delete("/api/admin/game/"+id).then((res)=>{
-                getGames();
+                toast.success("Game Deleted Successfully");
+                window.location.reload();
             });
 
         }
