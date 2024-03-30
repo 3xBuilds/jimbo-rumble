@@ -39,8 +39,6 @@ const page = () => {
     const [dialogues, setDialogues] = useState([]);
     // const [battleProgress, setBattleProgress] = useState()
 
-    const { provider } = usePhantomProvider();
-
     async function getCurrentGame(){
         try{
             await axios.get("/api/game/current").then((res)=>{setGame(res.data.currentGame);
@@ -209,9 +207,10 @@ const page = () => {
 
 const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showRevivePopup, revivalTime, setShowRevivePopup, setAlive}) => {
 
+    const { provider } = usePhantomProvider();
+
     const revivePlayer = async () => {
         try{
-            console.log("hi", game?.revivalFee * 1000000000)
             await paySolana(provider, game?.revivalFee * 1000000000)
             await axios.post(`/api/user/revive/${id}`);
             setAlive(true);
