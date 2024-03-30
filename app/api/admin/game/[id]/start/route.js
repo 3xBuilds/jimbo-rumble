@@ -50,7 +50,7 @@ export async function GET(req) {
             const round = await Round.create({
                 messages: messages,
                 revivalStopTime: (Number(startTime) + addTime + 120000), // 2mins
-                roundEndTime: (Number(startTime) + addTime + 240000) // (2+2)mins
+                roundEndTime: (Number(startTime) + addTime + 150000) // (2min+30s)
             });
 
             game.status = "ongoing";

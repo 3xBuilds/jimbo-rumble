@@ -80,17 +80,21 @@ const page = () => {
     }, [currentMessageIndex, game?.rounds[game?.rounds?.length-1]?.messages ]);
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
+        if(game?.status !== "ended"){
+            const intervalId = setInterval(() => {
 
-            revivalStopCountDown()
-            roundEndCountDown()
+                revivalStopCountDown()
+                roundEndCountDown()
 
-            checkRevivalStopTime()
-            checkRoundEndStopTime()
+                checkRevivalStopTime()
+                checkRoundEndStopTime()
 
-          } ,1000);
-        return () => clearInterval(intervalId);
-    }, [game]);
+            } ,1000);
+            return () => clearInterval(intervalId);
+        }
+    }, [
+        game
+    ]);
 
     const checkRevivalStopTime = () => {
         const now = Date.now();
@@ -104,6 +108,7 @@ const page = () => {
         const now = Date.now();
         if(Number(game?.rounds[game?.rounds?.length-1]?.roundEndTime) <= now){
             setRoundEnded(true);
+            window.location.reload();
         }
     }
 
@@ -123,11 +128,11 @@ const page = () => {
         revivePrompt();
     }, [currentMessageIndex, alive]);
 
-    useEffect(()=>{
-        if(roundEnded){
-            window.location.reload();
-        }
-    }, [roundEnded])
+    // useEffect(()=>{
+    //     if(roundEnded){
+    //         window.location.reload();
+    //     }
+    // }, [roundEnded])
 
     const revivePrompt = () => {
         if(currentMessageIndex>=game?.rounds[game?.rounds?.length-1]?.messages.length-1 && !alive){
