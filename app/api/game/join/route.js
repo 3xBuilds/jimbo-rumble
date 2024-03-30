@@ -19,6 +19,9 @@ export async function POST(req) {
             model: 'Player'
         });
 
+        currentGame.rewardPool = currentGame.rewardPool + currentGame.fee;
+        await currentGame.save();
+
         if(currentGame == null){
             return new NextResponse(JSON.stringify({success: false, error: "No Game Scheduled Currently"}), { status: 409 });
         }

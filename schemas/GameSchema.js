@@ -17,6 +17,8 @@ const GameSchema = new Schema({
         type: Number,
         default: 0
     },
+    rewardPool: {type: Number,
+        default: 0},
     revivalFee: {
         type: Number,
         default: 0
