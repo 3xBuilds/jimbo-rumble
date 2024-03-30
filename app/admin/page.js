@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGlobalContext } from '@/context/MainContext';
 import { CreateGame } from '@/components/admin/createGame';
 import { useRouter } from 'next/navigation';

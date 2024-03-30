@@ -13,10 +13,12 @@ import { useGlobalContext } from '@/context/MainContext';
 import {toast} from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
+import usePhantomProvider from "@/hooks/usePhantomProvider"
+import paySolana from "@/utils/paySolana"
+
 const page = () => {
 
     const router = useRouter();
-
 
     const [alive, setAlive] = useState(true);
     const [game, setGame] = useState(null);
@@ -201,7 +203,7 @@ const page = () => {
         </div>
 
         {game?.status == "ongoing" && <>
-        {showRevivePopup && !revivalStopped && <RevivePopup setRevivesLeft={setRevivesLeft} revivesLeft={revivesLeft} revivalStopped={revivalStopped} revivalTime={revivalTime} game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
+        {showRevivePopup && !revivalStopped && revivesLeft > 0 && <RevivePopup setRevivesLeft={setRevivesLeft} revivesLeft={revivesLeft} revivalStopped={revivalStopped} revivalTime={revivalTime} game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
         {showWaitPopup && revivalStopped && !roundEnded && <WaitPopup revivesLeft={revivesLeft} survivalMessage={survivalMessage} roundEndTime={roundEndTime} game={game} id={user._id} showWaitPopup={showWaitPopup} setShowWaitPopup={setShowWaitPopup} />}
         </>}
     </>
@@ -210,9 +212,12 @@ const page = () => {
 
 const RevivePopup = ({game, id, revivalStopped,revivesLeft,setRevivesLeft, showRevivePopup, revivalTime, setShowRevivePopup, setAlive}) => {
 
+    const { provider } = usePhantomProvider();
+
     const revivePlayer = async () => {
         try{
-            const res = await axios.post(`/api/user/revive/${id}`);
+            await paySolana(provider, game?.revivalFee * 1000000000)
+            await axios.post(`/api/user/revive/${id}`);
             setAlive(true);
             toast.success("You are successfully revived");
             setShowRevivePopup(false);

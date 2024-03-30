@@ -8,15 +8,26 @@ export async function GET(req) {
     try{
         await connectToDB();
 
-        revalidatePath('/', 'layout') 
+        revalidatePath('/', 'layout')
         
-        const currentGame = await Game.findOne(
+        var currentGame = await Game.findOne(
             { status: "upcoming" }
         )
         .populate({
             path: 'players',
             model: 'Player'
         });
+
+        if (!currentGame) {
+            currentGame = await Game.findOne({ status: "ongoing" })
+            .populate({
+                path: 'rounds',
+                model: 'Round'
+            }).populate({
+                path: 'players',
+                model: 'Player'
+            });
+        }
         
         if(currentGame == null){
             return new NextResponse(JSON.stringify({success: false, error: "No Game Scheduled Currently"}), { status: 404 });
