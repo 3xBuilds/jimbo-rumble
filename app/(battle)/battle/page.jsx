@@ -198,7 +198,7 @@ const page = () => {
         </div>
 
         {game?.status == "ongoing" && <>
-        {showRevivePopup && !revivalStopped && <RevivePopup setRevivesLeft={setRevivesLeft} revivesLeft={revivesLeft} revivalStopped={revivalStopped} revivalTime={revivalTime} game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
+        {showRevivePopup && !revivalStopped && revivesLeft > 0 && <RevivePopup setRevivesLeft={setRevivesLeft} revivesLeft={revivesLeft} revivalStopped={revivalStopped} revivalTime={revivalTime} game={game} id={user._id} showRevivePopup={showRevivePopup} setShowRevivePopup={setShowRevivePopup} setAlive={setAlive}/>}
         {showWaitPopup && revivalStopped && !roundEnded && <WaitPopup revivesLeft={revivesLeft} survivalMessage={survivalMessage} roundEndTime={roundEndTime} game={game} id={user._id} showWaitPopup={showWaitPopup} setShowWaitPopup={setShowWaitPopup} />}
         </>}
     </>
