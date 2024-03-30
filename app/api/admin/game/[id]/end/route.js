@@ -2,6 +2,7 @@
 import Game from "@/schemas/GameSchema";
 import Player from "@/schemas/PlayerSchema";
 import Round from "@/schemas/RoundSchema";
+import User from "@/schemas/UserSchema";
 import { connectToDB } from "@/utils/db";
 import { startGame } from "@/utils/wordPlay";
 import { NextResponse } from "next/server";
@@ -17,6 +18,7 @@ export async function GET(req) {
             model: 'Player',
         });
 
+
         if(game == null){
             return new NextResponse(JSON.stringify({success: false, error: "Game Not Found"}), { status: 404 });
         }
@@ -26,7 +28,12 @@ export async function GET(req) {
                 return new NextResponse(JSON.stringify({success: false, error: "Game already ended"}), { status: 404 });
             }
 
+            //find the alive player
+            let alivePlayers = game.players.filter(player => player.isAlive );
+            const winner = await User.findById(alivePlayers[0]?.userId);
+
             game.status = "ended";
+            game.winner = winner;
 
             await game.save();
 

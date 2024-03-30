@@ -13,7 +13,7 @@ const GameSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: Player,
     }],
-    winner: String,
+    winner: Object,
     fee: {
         type: Number,
         default: 0
