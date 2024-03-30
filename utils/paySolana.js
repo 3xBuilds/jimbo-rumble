@@ -9,7 +9,7 @@ const paySolana = async (provider, lamports, pubKey) => {
     const connection = new Connection(NETWORK);
 
     let blockhash = await connection.getLatestBlockhash().then((res) => res.blockhash);
-
+    console.log(pubKey)
     const instructions = [
       SystemProgram.transfer({
         fromPubkey: provider.publicKey,
@@ -17,14 +17,14 @@ const paySolana = async (provider, lamports, pubKey) => {
         lamports: lamports,
       }),
     ];
-
+    console.log("hello", provider.publicKey);
     // create v0 compatible message
     const messageV0 = new TransactionMessage({
       payerKey: provider.publicKey,
       recentBlockhash: blockhash,
       instructions,
     }).compileToV0Message();
-
+    
     // make a versioned transaction
     const transactionV0 = new VersionedTransaction(messageV0);
 

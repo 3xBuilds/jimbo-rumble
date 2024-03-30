@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import  axios  from 'axios';
 import { useRouter } from 'next/navigation';
@@ -9,9 +9,22 @@ import { toast } from 'react-toastify';
 
 export const CreateGame = () => {
 
-    const [gameFields, setGameFields] = useState({fee: 0, revivalFee: 0, battleStartTime: 0, regCloseTime: 0, reviveLimit: 0});
-    
+    const [gameFields, setGameFields] =  useState({fee: 0, revivalFee: 0, battleStartTime: 0, regCloseTime: 0, reviveLimit: 0});
+    const [gameScheduled, setGameScheduled] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+
+    async function checkGames(){
+        try{
+            const res = await axios.get("/api/game/current");
+            
+            if(res.data.status == "ended"){
+                setGameScheduled(false)
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
 
     async function createGame(){
         try{
@@ -24,6 +37,12 @@ export const CreateGame = () => {
         }
     }
 
+    useEffect(()=>{
+        checkGames();
+    },[])
+
+
+    if(!gameScheduled){
  if(!isOpen) return (
     <button onClick={()=>{setIsOpen(prev=>!prev)}} className=' bg-jimbo-green/60 px-4 py-2 text-xl rounded-xl hover:bg-jimbo-green/90 mt-5 duration-200'>Create Game</button>
  )
@@ -63,4 +82,4 @@ export const CreateGame = () => {
 <button onClick={createGame} className=' bg-jimbo-green/60 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 mt-5 duration-200'>Create Game</button>
     </div>
   )
-}
+}}

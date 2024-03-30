@@ -12,12 +12,14 @@ import paySolana from '@/utils/paySolana';
 
 export const UpcomingGames = () => {
 
+    const {provider} = usePhantomProvider();
+
     const [upcomingGames, setUpcomingGames] = useState([])
 
     async function getGames(){
         try{
             const res = await axios.get("/api/game");
-            const scheduledGames = res.data.games
+            const scheduledGames = res.data.games.reverse()
             
             setUpcomingGames(scheduledGames);
 
@@ -61,9 +63,10 @@ export const UpcomingGames = () => {
         }
     }
 
-    async function sendSolana(){
+    async function sendSolana(key){
         try{
-            await paySolana(provider, game?.rewardPool * 0.7 * 1000000000, game.winner);
+            console.log(provider);
+            await paySolana(provider, upcomingGames[key]?.rewardPool * 700000000, upcomingGames[key].winner.walletId);
         }
         catch(err){
             console.log(err);
@@ -78,16 +81,18 @@ export const UpcomingGames = () => {
     <div className='mt-10 w-[90%] mx-auto text-center flex flex-col items-center'>
         <h3 className='text-jimbo-green text-2xl my-5'>Games</h3>
         <div className='bg-black/40 rounded-xl px-6 py-3 w-[90%] max-h-[30rem] overflow-scroll noscr'>
-            {upcomingGames.map((i)=>(
+            {upcomingGames.map((i, key)=>(
                 <div className={`my-4 p-3 rounded-xl ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-gray-400 "} ${i.status == "ended" ? " bg-slate-600 " : i.status == "ongoing" ? " bg-yellow-500 " : " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 "} `}>
+                    
                     {
                     // i.status == "upcoming" &&
                     <div>
                         <button onClick={()=>{deleteGame(i._id)}} className='bg-red-500 hover:bg-red-400 float-left duration-200 px-2 py-2 rounded-2'><RiDeleteBin6Fill /></button>
-                    <button onClick={()=>{startGame(i._id)}} className='bg-blue-500 hover:bg-blue-400 float-right duration-200 px-2 py-2 rounded-2'><FaFlag/></button>
+
                     </div>}
                     
                     <h2 className='text-xl text-center mb-5'>Entrants: {i.players.length} -- ({i.status})</h2>
+                    <h3>Winner: {i.winner?.username}</h3>
                     <div className='grid grid-flow-col text-center gap-3'>
                         <h2 className='bg-white/50 text-black px-5 py-1 rounded'>Registration Closes: <br /> {moment(Number(i.regCloseTime)).format('LLL')}</h2>
                         <h2 className='bg-white/50 text-black px-5 py-1 rounded'>Starts on: <br /> {moment(Number(i.battleStartTime)).format('LLL')}</h2>
@@ -104,7 +109,7 @@ export const UpcomingGames = () => {
                         endGame(i._id);
                     }} className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4'>End Game</button>}
 
-                    {i.status == "ended" && <button className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4' onClick={sendSolana}>Distribute Reward</button>}
+                    {i.status == "ended" && <button className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4' onClick={()=>{sendSolana(key)}}>Distribute Reward</button>}
                 </div>
             ))}
         </div>
