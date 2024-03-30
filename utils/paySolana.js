@@ -1,7 +1,7 @@
 import { TransactionMessage, VersionedTransaction, SystemProgram, Connection, PublicKey } from '@solana/web3.js';
 import { toast } from "react-toastify"
 
-const paySolana = async (provider, lamports) => {
+const paySolana = async (provider, lamports, pubKey) => {
   if (!provider) return
 
   try {
@@ -13,7 +13,7 @@ const paySolana = async (provider, lamports) => {
     const instructions = [
       SystemProgram.transfer({
         fromPubkey: provider.publicKey,
-        toPubkey: new PublicKey('4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7'),
+        toPubkey: new PublicKey(pubKey),
         lamports: lamports,
       }),
     ];

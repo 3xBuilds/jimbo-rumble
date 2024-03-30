@@ -7,6 +7,9 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import {FaFlag} from "react-icons/fa"
 import {toast} from "react-toastify"
 
+import usePhantomProvider from '@/hooks/usePhantomProvider';
+import paySolana from '@/utils/paySolana';
+
 export const UpcomingGames = () => {
 
     const [upcomingGames, setUpcomingGames] = useState([])
@@ -58,6 +61,15 @@ export const UpcomingGames = () => {
         }
     }
 
+    async function sendSolana(){
+        try{
+            await paySolana(provider, game?.rewardPool * 0.7 * 1000000000, game.winner);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     useEffect(()=>{
         getGames();
     },[])
@@ -91,6 +103,8 @@ export const UpcomingGames = () => {
                     {i.status!=="ended" && <button onClick={()=>{
                         endGame(i._id);
                     }} className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4'>End Game</button>}
+
+                    {i.status == "ended" && <button onClick={sendSolana}>Distribute Reward</button>}
                 </div>
             ))}
         </div>

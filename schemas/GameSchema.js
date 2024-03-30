@@ -1,6 +1,7 @@
 import mongoose, {Schema, model, models} from 'mongoose';
 import Player from './PlayerSchema';
 import Round from './RoundSchema';
+import User from './UserSchema';
 
 const GameSchema = new Schema({
     id: mongoose.Schema.Types.ObjectId,
