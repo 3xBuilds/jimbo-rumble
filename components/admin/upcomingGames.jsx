@@ -104,7 +104,7 @@ export const UpcomingGames = () => {
                         endGame(i._id);
                     }} className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4'>End Game</button>}
 
-                    {i.status == "ended" && <button onClick={sendSolana}>Distribute Reward</button>}
+                    {i.status == "ended" && <button className='bg-black/30 border-jimbo-green border-[1px] ml-2 hover:bg-white/50 hover:text-black duration-300 px-5 py-1 rounded-lg mt-4' onClick={sendSolana}>Distribute Reward</button>}
                 </div>
             ))}
         </div>
