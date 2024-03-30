@@ -31,7 +31,7 @@ const Play = () => {
 
   const joinBattle = async () => {
     if (chosen) {
-      if (await paySolana(provider, entryFee * 1000000000, "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7")) {
+      if (await paySolana(provider, entryFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)) {
         const parts = chosen?.split("#");
         const extractedNumber = parts[1];
 
