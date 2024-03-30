@@ -16,10 +16,52 @@ export const UpcomingGames = () => {
 
     const [upcomingGames, setUpcomingGames] = useState([])
 
+    const [game, setGame] = useState(null);
+
+    const [roundEndTime, setRoundEndTime] = useState("");
+    const [revivalTime, setRevivalTime] = useState("");
+
+    const [revivalStopped, setRevivalStopped] = useState(false);
+    const [roundEnded, setRoundEnded] = useState(false);
+
+
+    const [playersAlive, setPlayersAlive] = useState(0);
+
+    // const [showRevivePopup, setShowRevivePopup] = useState(false);
+    // const [showWaitPopup, setShowWaitPopup] = useState(true);
+
+    const checkRevivalStopTime = () => {
+        const now = Date.now();
+        if (Number(game?.rounds[game?.rounds?.length - 1]?.revivalStopTime) <= now) {
+            // setShowRevivePopup(false);
+            setRevivalStopped(true);
+        }
+    }
+
+    const checkRoundEndStopTime = () => {
+        const now = Date.now();
+        if (Number(game?.rounds[game?.rounds?.length - 1]?.roundEndTime) <= now) {
+            setRoundEnded(true);
+            window.location.reload();
+        }
+    }
+
+    const revivalStopCountDown = () => {
+        setRevivalTime(` ${(moment.duration(Number(game?.rounds[game?.rounds?.length - 1]?.revivalStopTime) - Date.now())).minutes()} : ${(moment.duration(Number(game?.rounds[game?.rounds?.length - 1]?.revivalStopTime) - Date.now())).seconds().toString().padStart(2, '0')}`);
+    }
+
+    const roundEndCountDown = () => {
+        setRoundEndTime(`${(moment.duration(Number(game?.rounds[game?.rounds?.length - 1]?.roundEndTime) - Date.now())).minutes()} : ${(moment.duration(Number(game?.rounds[game?.rounds?.length - 1]?.roundEndTime) - Date.now())).seconds().toString().padStart(2, '0')}`);
+    }
+
     async function getGames(){
         try{
             const res = await axios.get("/api/game");
             const scheduledGames = res.data.games.reverse()
+
+            setGame(scheduledGames[0]);
+            
+            setPlayersAlive(scheduledGames[0].players.filter(i=>i.isAlive).length)
             
             setUpcomingGames(scheduledGames);
 
@@ -27,6 +69,23 @@ export const UpcomingGames = () => {
         catch(err){
         }
     }
+
+    useEffect(() => {
+        if (game?.status !== "ended") {
+            const intervalId = setInterval(() => {
+
+                revivalStopCountDown()
+                roundEndCountDown()
+
+                checkRevivalStopTime()
+                checkRoundEndStopTime()
+
+            }, 1000);
+            return () => clearInterval(intervalId);
+        }
+    }, [
+        game
+    ]);
 
     async function deleteGame(id){
         try{
@@ -44,7 +103,7 @@ export const UpcomingGames = () => {
             await axios.get("/api/admin/game/"+id+"/start").then((res)=>{
                 toast.success("Game Started Successfully");
             });
-            getGames();
+            window.location.reload();
         }
         catch(err){
             toast.error("Game could not start");
@@ -73,6 +132,8 @@ export const UpcomingGames = () => {
         }
     }
 
+    
+
     useEffect(()=>{
         getGames();
     },[])
@@ -80,6 +141,10 @@ export const UpcomingGames = () => {
   return (
     <div className='mt-10 w-[90%] mx-auto text-center flex flex-col items-center'>
         <h3 className='text-jimbo-green text-2xl my-5'>Games</h3>
+
+        {game?.status=="ongoing" && !revivalStopped && <h3 className='text-center mx-auto text-white my-2'>Revival Ongoing Till: <br /> <span className='text-2xl text-jimbo-green'>{revivalTime}</span></h3>}
+        {game?.status=="ongoing" && revivalStopped && !roundEnded && <h3 className='text-center mx-auto text-white my-2'>Round Ends In: <br /> <span className='text-2xl text-jimbo-green'>{roundEndTime}</span></h3>}
+        {game?.status=="ongoing" && <h3 className='text-center mx-auto text-white my-2'>Alive: {playersAlive}</h3>}
         <div className='bg-black/40 rounded-xl px-6 py-3 w-[90%] max-h-[30rem] overflow-scroll noscr'>
             {upcomingGames.map((i, key)=>(
                 <div className={`my-4 p-3 rounded-xl ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-gray-400 "} ${i.status == "ended" ? " bg-slate-600 " : i.status == "ongoing" ? " bg-yellow-500 " : " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 "} `}>
@@ -92,7 +157,7 @@ export const UpcomingGames = () => {
                     </div>}
                     
                     <h2 className='text-xl text-center mb-5'>Entrants: {i.players.length} -- ({i.status})</h2>
-                    <h3>Winner: {i.winner?.username}</h3>
+                    {game?.status=="ended" && <h3 className='bg-black/20 rounded-lg w-fit px-4 py-1 mx-auto mb-2'>Winner: {i.winner?.username}</h3>}
                     <div className='grid grid-flow-col text-center gap-3'>
                         <h2 className='bg-white/50 text-black px-5 py-1 rounded'>Registration Closes: <br /> {moment(Number(i.regCloseTime)).format('LLL')}</h2>
                         <h2 className='bg-white/50 text-black px-5 py-1 rounded'>Starts on: <br /> {moment(Number(i.battleStartTime)).format('LLL')}</h2>

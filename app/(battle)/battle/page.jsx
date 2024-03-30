@@ -27,6 +27,7 @@ const page = () => {
     const [roundEndTime, setRoundEndTime] = useState("");
     const [revivalTime, setRevivalTime] = useState("");
 
+
     const [revivalStopped, setRevivalStopped] = useState(false);
     const [roundEnded, setRoundEnded] = useState(false);
 
@@ -37,6 +38,7 @@ const page = () => {
     const [survivalMessage, setSurvivalMessage] = useState("");
 
     const [dialogues, setDialogues] = useState([]);
+
     // const [battleProgress, setBattleProgress] = useState()
 
     async function getCurrentGame() {
@@ -158,7 +160,22 @@ const page = () => {
 
                 {game?.status !== "ended" && game && <h2 className='text-center text-jimbo-green mb-2'>------ {"Round-" + (game?.rounds?.length)} ------</h2>}
 
+                {game?.status == "ended" && 
+                    <div className='text-jimbo-green mx-auto mt-20'>
+                        { alive ?
+                        <div className='flex flex-col items-center justify-center text-xl'>
+                            <h3 className='text-center'>Congrats! You are the last player standing</h3> <br />
+                            <span className='text-sm text-white text-center mx-auto leading-none'>(Your Winnings will be sent to your wallet shortly)</span>
+                        </div>
+                            :
+                        <div className='flex flex-col items-center justify-center text-xl'>
+                            <h3 className='text-center'>Sorry! Better Luck Next Time</h3> <br />
+                            <span className='text-sm text-white text-center mx-auto leading-none'>(Maybe next time you win it all)</span>
+                        </div> }
+                    </div>}
+
                 {game?.status == "ended" && <h2 className='text-center text-jimbo-green'>------ Game Ended ------</h2>}
+                
 
                 {
                     // game?.status == "ongoing" &&

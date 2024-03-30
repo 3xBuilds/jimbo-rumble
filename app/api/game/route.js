@@ -9,6 +9,9 @@ export async function GET(req) {
         revalidatePath('/', 'layout') 
         const games = await Game.find()
         .populate({
+            path: 'rounds',
+            model: 'Round'
+        }).populate({
             path: 'players',
             model: 'Player'
         })
