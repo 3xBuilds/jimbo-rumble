@@ -5,7 +5,7 @@ const paySolana = async (provider, lamports, pubKey) => {
   if (!provider) return
 
   try {
-    const NETWORK = "https://solana-devnet.g.alchemy.com/v2/o-5MHzJ43DEJywRvsw-HkqSAA6c4CD51";
+    const NETWORK = "https://solana-mainnet.g.alchemy.com/v2/o-5MHzJ43DEJywRvsw-HkqSAA6c4CD51";
     const connection = new Connection(NETWORK);
 
     let blockhash = await connection.getLatestBlockhash().then((res) => res.blockhash);
