@@ -1,20 +1,37 @@
-import { TransactionMessage, VersionedTransaction, SystemProgram, Connection, PublicKey } from '@solana/web3.js';
+import { TransactionMessage, VersionedTransaction, Connection, PublicKey} from '@solana/web3.js';
+import { createTransferInstruction, getAssociatedTokenAddress } from "@solana/spl-token";
 import { toast } from "react-toastify"
 
-const paySolana = async (provider, lamports, pubKey) => {
+const payToken = async (provider, amount, pubKey) => { 
   if (!provider) return
 
   try {
-    const NETWORK = "https://solana-mainnet.g.alchemy.com/v2/tAVgt_oYxsFttt0jPbqNDBug1CYH2IRy";
+
+    const NETWORK = "https://solana-devnet.g.alchemy.com/v2/d7jL5sZiEQrVT4eiUn2O3gtNDVjAWe7u";
     const connection = new Connection(NETWORK);
 
+    const MINT_ADDRESS = 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr';
+    const TRANSFER_AMOUNT = amount;
+
     let blockhash = await connection.getLatestBlockhash().then((res) => res.blockhash);
+
+    let sourceAccount = await getAssociatedTokenAddress(
+        new PublicKey(MINT_ADDRESS),
+        provider.publicKey
+    );
+
+    let destinationAccount = await getAssociatedTokenAddress(
+        new PublicKey(MINT_ADDRESS),
+        new PublicKey(pubKey)
+    );
+
     const instructions = [
-      SystemProgram.transfer({
-        fromPubkey: provider.publicKey,
-        toPubkey: new PublicKey(pubKey),
-        lamports: lamports,
-      }),
+    createTransferInstruction(
+        sourceAccount,
+        destinationAccount,
+        provider.publicKey,
+        TRANSFER_AMOUNT
+    )
     ];
     // create v0 compatible message
     const messageV0 = new TransactionMessage({
@@ -45,4 +62,4 @@ const paySolana = async (provider, lamports, pubKey) => {
   }
 }
 
-export default paySolana;
+export default payToken;

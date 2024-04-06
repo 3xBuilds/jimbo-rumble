@@ -11,6 +11,7 @@ import { toast } from "react-toastify"
 
 import usePhantomProvider from "@/hooks/usePhantomProvider"
 import paySolana from "@/utils/paySolana"
+import payToken from "@/utils/payToken";
 
 const Play = () => {
 
