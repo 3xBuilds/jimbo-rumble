@@ -18,6 +18,10 @@ const GameSchema = new Schema({
         type: Number,
         default: 0
     },
+    currency: {
+        type: String,
+        default: "SOL" // SOL, JIMBO
+    },
     rewardPool: {type: Number,
         default: 0},
     revivalFee: {

@@ -104,7 +104,7 @@ const Play = () => {
         <div className={`grid ${!players.some(player => player.userId == user._id) || (players?.length <= 11) ? "grid-rows-1" : "grid-rows-2"} grid-flow-col items-center justify-start gap-2 mt-2 noscr h-full`}>
           {
             players.map((player) => (
-              <NFTCard username={player.username} nftname={`#Jimbo${player.tokenId}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${player.tokenId}`} type={user._id == player.userId ? "selected" : ""} />
+              <NFTCard currency={game.currency} username={player.username} nftname={`#Jimbo${player.tokenId}`} image={`https://images.pinit.io/ipfs/QmREHsnRoKN4ZGWU9oozBwDDTCfxkcDuB8V7o3CoCNtyfN/${player.tokenId}`} type={user._id == player.userId ? "selected" : ""} />
             ))
           }
 
@@ -117,7 +117,7 @@ const Play = () => {
 
           <div className="flex flex-row gap-2 mt-2 noscr">
             {jimboNFTs ? jimboNFTs?.map((nft) => <>
-              <NFTCard key={nft.name} id={nft.name} entryFee={entryFee} nftname={nft.name} joinBattle={joinBattle} image={nft.image_uri} type={"user"} setChosen={setChosen} selected={nft.name === chosen} />
+              <NFTCard key={nft.name} currency={game.currency} id={nft.name} entryFee={entryFee} nftname={nft.name} joinBattle={joinBattle} image={nft.image_uri} type={"user"} setChosen={setChosen} selected={nft.name === chosen} />
             </>) :
               <h1 className=" text-red-600">Loading...</h1>
             }

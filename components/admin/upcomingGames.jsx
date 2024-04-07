@@ -148,14 +148,18 @@ export const UpcomingGames = () => {
         {game?.status=="ongoing" && <h3 className='text-center mx-auto text-white my-2'>Alive: {playersAlive}</h3>}
         <div className='bg-black/40 rounded-xl px-6 py-3 w-[90%] max-h-[30rem] overflow-scroll noscr'>
             {upcomingGames.map((i, key)=>(
-                <div className={`my-4 p-3 rounded-xl ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-gray-400 "} ${i.status == "ended" ? " bg-slate-600 " : i.status == "ongoing" ? " bg-yellow-500 " : " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 "} `}>
+                <div className={`relative my-4 p-3 rounded-xl overflow-hidden ${i.status == "upcoming" ? " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 ": " bg-gray-400 "} ${i.status == "ended" ? " bg-slate-600 " : i.status == "ongoing" ? " bg-yellow-500 " : " bg-gradient-to-br from-jimbo-green/80 to-jimbo-green/20 "} `}>
                     
                     {
                     // i.status == "upcoming" &&
                     <div>
-                        <button onClick={()=>{deleteGame(i._id)}} className='bg-red-500 hover:bg-red-400 float-left duration-200 px-2 py-2 rounded-2'><RiDeleteBin6Fill /></button>
+                        <button onClick={()=>{deleteGame(i._id)}} className='bg-red-500 rounded hover:bg-red-400 float-left duration-200 px-2 py-2 rounded-2'><RiDeleteBin6Fill /></button>
 
                     </div>}
+
+                    <div className=' bg-black/40 rounded-bl-xl absolute top-0 right-0 px-5 py-2'>
+                        <h3 className='text-white'>${i.currency}</h3>
+                    </div>
                     
                     <h2 className='text-xl text-center mb-5'>Entrants: {i.players.length} -- ({i.status})</h2>
                     {game?.status=="ended" && <h3 className='bg-black/20 rounded-lg w-fit px-4 py-1 mx-auto mb-2'>Winner: {i.winner?.username}</h3>}

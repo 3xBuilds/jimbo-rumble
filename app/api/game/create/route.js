@@ -7,7 +7,7 @@ export async function POST(req) {
         await connectToDB();
         
         const body = await req.json();
-        const {fee, revivalFee, battleStartTime, regCloseTime, reviveLimit} = body;
+        const {fee, revivalFee, battleStartTime, regCloseTime, reviveLimit, currency} = body;
 
         const dateExists = await Game.findOne(
             { battleStartTime }
@@ -19,7 +19,7 @@ export async function POST(req) {
         
         else{
             const game = await Game.create({
-                fee, revivalFee, battleStartTime, regCloseTime, reviveLimit
+                fee, revivalFee, battleStartTime, regCloseTime, reviveLimit, currency
             })
             return new NextResponse(JSON.stringify({success: true, message: "Successfully Created Game", game: game}), { status: 200 });
         }
