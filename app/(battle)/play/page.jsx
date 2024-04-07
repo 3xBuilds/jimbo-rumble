@@ -32,7 +32,15 @@ const Play = () => {
 
   const joinBattle = async () => {
     if (chosen) {
-      if (await paySolana(provider, entryFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)) {
+      let transaction;
+      if(game.currency == "SOL"){
+        transaction = await paySolana(provider, entryFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)
+      }
+      else{
+        transaction = await payToken(provider, entryFee * 1000000, "...")
+      }
+
+      if (transaction) {
         const parts = chosen?.split("#");
         const extractedNumber = parts[1];
 
@@ -48,10 +56,10 @@ const Play = () => {
             toast.error(err.response.data.error)
           })
       } else {
-        toast.success("Payment Failed")
+        toast.error("Payment Failed")
       }
     } else {
-      toast.success("Please select an NFT to play")
+      toast.error("Please select an NFT to play")
     }
   }
 

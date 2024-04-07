@@ -49,11 +49,11 @@ const payToken = async (provider, amount, pubKey) => {
     console.log(signatureStatus);
 
     if (signatureStatus?.err) {
-      toast.error("Payment Failed")
+      // toast.error("Payment Failed")
       return false
     }
     else {
-      toast.success("Payment Successful")
+      // toast.success("Payment Successful")
       return true
     }
   }

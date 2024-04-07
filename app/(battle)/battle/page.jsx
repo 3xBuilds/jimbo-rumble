@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 
 import usePhantomProvider from "@/hooks/usePhantomProvider"
 import paySolana from "@/utils/paySolana"
+import payToken from '@/utils/payToken';
 
 const page = () => {
 
@@ -235,7 +236,14 @@ const RevivePopup = ({ game, id, revivalStopped, revivesLeft, setRevivesLeft, sh
 
     const revivePlayer = async () => {
         try {
-            if (await paySolana(provider, game?.revivalFee * 1000000000, process.env.NEXT_PUBLIC_DEV_KEY)) {
+            let transaction;
+            if(game.currency == "SOL"){
+                transaction = await paySolana(provider, game?.revivalFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)
+            }
+            else{
+                transaction = await payToken(provider, game?.revivalFee * 1000000, "...")
+            }
+            if (transaction) {
                 await axios.post(`/api/user/revive/${id}`);
                 setAlive(true);
                 toast.success("You are successfully revived");
@@ -263,7 +271,7 @@ const RevivePopup = ({ game, id, revivalStopped, revivesLeft, setRevivesLeft, sh
                 <h3 className='text-white bg-white/10 rounded-lg px-4 py-2 mb-2 border-[1px] border-jimbo-green'> Revive within: <span className='text-jimbo-green text-2xl mt-3'>{revivalTime}</span></h3>
                 <h3 className='text-white'>  Revives Left : <span className='text-jimbo-green text-base mt-2'>  {revivesLeft} </span></h3>
                 <br />
-                <h3 className='text-white'> You were killed this round <br /> You can revive now with <br /> <span className='text-jimbo-green text-2xl mt-3'>{game?.revivalFee || "--"} SOL</span></h3>
+                <h3 className='text-white'> You were killed this round <br /> You can revive now with <br /> <span className='text-jimbo-green text-2xl mt-3'>{game?.revivalFee || "--"} {game?.currency}</span></h3>
                 <button onClick={() => { revivePlayer() }} className='cursor-pointer mt-10 bg-jimbo-green/60 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Revive Player</button>
                 <button onClick={() => { setShowRevivePopup(false) }} className='cursor-pointer mt-2 bg-jimbo-green/30 px-4 py-2 text-lg rounded-xl hover:bg-jimbo-green/90 duration-200'>Spectate Game</button>
             </div>
