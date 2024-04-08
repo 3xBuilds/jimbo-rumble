@@ -37,7 +37,7 @@ const Play = () => {
         transaction = await paySolana(provider, entryFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)
       }
       else{
-        transaction = await payToken(provider, entryFee * 1000000, "...")
+        transaction = await payToken(provider, entryFee * 1000000, process.env.NEXT_PUBLIC_JIMBO_KEY)
       }
 
       if (transaction) {
