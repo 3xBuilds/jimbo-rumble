@@ -38,6 +38,7 @@ const Play = () => {
       }
       else{
         transaction = await payToken(provider, entryFee * 10000, process.env.NEXT_PUBLIC_JIMBO_KEY)
+        
       }
 
       if (transaction) {
