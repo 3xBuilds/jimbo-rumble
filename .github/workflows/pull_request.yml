@@ -11,7 +11,7 @@ jobs:
         steps:
           - uses: TobKed/github-forks-sync-action@master
             with:
-                github_token: ${{ secrets.PAT_TOKEN}}
+                github_token: ${{secrets.PAT_TOKEN}}
                 upstream_repository: 3xBuilds/jimbo-rumble
                 target_repository: 3xbuildz/jimbo-rumble
                 upstream_branch: main
