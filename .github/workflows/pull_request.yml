@@ -1,0 +1,20 @@
+name: Create and Merge Pull Request
+
+on:
+  push:
+    branches:
+      main
+
+jobs:
+    update_external_airflow_fork:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: TobKed/github-forks-sync-action@master
+            with:
+                github_token: ${{ secrets.PAT_TOKEN}}
+                upstream_repository: 3xBuilds/jimbo-rumble
+                target_repository: 3xbuildz/jimbo-rumble
+                upstream_branch: main
+                target_branch: release
+                force: true
+                tags: true
