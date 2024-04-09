@@ -1,6 +1,5 @@
 import { TransactionMessage, VersionedTransaction, Connection, PublicKey} from '@solana/web3.js';
 import { createTransferInstruction, getAssociatedTokenAddress } from "@solana/spl-token";
-import { toast } from "react-toastify"
 
 const payToken = async (provider, amount, pubKey) => { 
   if (!provider) return
