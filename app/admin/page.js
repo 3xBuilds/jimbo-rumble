@@ -12,9 +12,13 @@ export default function Admin() {
     const {user} = useGlobalContext();
     const router = useRouter()
 
+    useEffect(()=>{
+        if(user.walletId != process.env.NEXT_PUBLIC_JIMBO_KEY){
+            router.push("/");
+        }
+    },[user])
 
-
-
+  if(user.walletId == process.env.NEXT_PUBLIC_JIMBO_KEY)
   return (
     <div className="text-white flex min-h-screen flex-col relative p-12 z-0 overflow-hidden items-center justify-start">
       <WalletConnectButton/>
