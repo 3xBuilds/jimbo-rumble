@@ -159,24 +159,7 @@ const page = () => {
 
             <div className="w-[80%] text-white max-md:w-[98%] mx-auto flex flex-col-reverse gap-2">
 
-                {game?.status !== "ended" && game && <h2 className='text-center text-jimbo-green mb-2'>------ {"Round-" + (game?.rounds?.length)} ------</h2>}
-
-                {game?.status == "ended" && 
-                    <div className='text-jimbo-green mx-auto mt-20'>
-                        { alive ?
-                        <div className='flex flex-col items-center justify-center text-xl'>
-                            <h3 className='text-center'>Congrats! You are the last player standing</h3> <br />
-                            <span className='text-sm text-white text-center mx-auto leading-none'>(Your Winnings will be sent to your wallet shortly)</span>
-                        </div>
-                            :
-                        <div className='flex flex-col items-center justify-center text-xl'>
-                            <h3 className='text-center'>Sorry! Better Luck Next Time</h3> <br />
-                            <span className='text-sm text-white text-center mx-auto leading-none'>(Maybe next time you win it all)</span>
-                        </div> }
-                    </div>}
-
-                {game?.status == "ended" && <h2 className='text-center text-jimbo-green'>------ Game Ended ------</h2>}
-                
+                { game && <h2 className='text-center text-jimbo-green mb-2'>------ {"Round-" + (game?.rounds?.length)} ------</h2>}
 
                 {
                     // game?.status == "ongoing" &&
@@ -194,6 +177,23 @@ const page = () => {
                         // }
                     })
                 }
+
+                {game?.status == "ended" && <h2 className='text-center text-jimbo-green'>------ Game Ended ------</h2>}
+                
+                {game?.status == "ended" && 
+                    <div className='text-jimbo-green mx-auto mt-10 mb-10'>
+                        { alive ?
+                        <div className='flex flex-col items-center justify-center text-xl'>
+                            <h3 className='text-center'>Congrats! You are the last player standing</h3> <br />
+                            <span className='text-sm text-white text-center mx-auto leading-none'>(Your Winnings will be sent to your wallet shortly)</span>
+                        </div>
+                            :
+                        <div className='flex flex-col items-center justify-center text-xl'>
+                            <h3 className='text-center'>Sorry! Better Luck Next Time</h3> <br />
+                            <span className='text-sm text-white text-center mx-auto leading-none'>(Maybe next time you win it all)</span>
+                        </div> }
+                    </div>}
+
             </div>
 
             <div className="w-[80%] text-white max-md:w-[98%] mx-auto flex flex-col-reverse gap-2">
@@ -201,8 +201,8 @@ const page = () => {
                     // game?.status == "ongoing" &&
                     prevRounds?.map((round, index) => (
                         <>
-                            {game?.status !== "ended" && <h2 className='text-center text-jimbo-green'>------ {"Round-" + (index + 1)} ------</h2>}
-                            {game?.status == "ongoing" &&
+                            {game?.status == "ongoing" || game?.status == "ended" && <h2 className='text-center text-jimbo-green'>------ {"Round-" + (index + 1)} ------</h2>}
+                            {game?.status == "ongoing" || game?.status == "ended" &&
                                 round?.messages?.map((message, index) => {
                                     // if(Date.now() >= message.timeStamp){
                                     if (message?.message?.startsWith("-----")) return (
