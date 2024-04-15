@@ -18,7 +18,7 @@ export const GlobalContextProvider = ({ children }) => {
 
   const [loader, setLoader] = useState(false);
   const [publicKey, setPublicKey] = useState(null);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   async function checkExistingUser(){
     try{
