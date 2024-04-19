@@ -15,7 +15,7 @@ export default function Admin() {
 
     useEffect(()=>{
       if(user){
-        if(( user?.walletId != process.env.NEXT_PUBLIC_JIMBO_KEY)){
+        if(( [process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX", "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u"].includes(user?.walletId))){
             router.push("/");
         }
       }
@@ -24,7 +24,7 @@ export default function Admin() {
   return (
     <div className="text-white flex min-h-screen flex-col relative p-12 z-0 overflow-hidden items-center justify-start">
       <WalletConnectButton/>
-        {user?.walletId == process.env.NEXT_PUBLIC_JIMBO_KEY &&
+        {[process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX", "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u"].includes(user?.walletId) &&
           <>
             <h1 className='text-3xl text-jimbo-green font-bold'>Admin Panel</h1>
             <CreateGame/>
