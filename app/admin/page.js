@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useGlobalContext } from '@/context/MainContext';
 import { CreateGame } from '@/components/admin/createGame';
 import { useRouter } from 'next/navigation';
 import { UpcomingGames } from '@/components/admin/upcomingGames';
 import WalletConnectButton from '@/components/global/WalletConnectButton';
-import axios from 'axios';
 
 export default function Admin() {
 
@@ -15,8 +14,8 @@ export default function Admin() {
 
     useEffect(()=>{
       if(user){
-        if(( [process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX", "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u"].includes(user?.walletId))){
-            router.push("/");
+        if(![process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX", "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u"].includes(user?.walletId)){
+          router.push("/");
         }
       }
     },[user])
