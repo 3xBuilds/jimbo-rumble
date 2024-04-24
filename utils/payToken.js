@@ -6,7 +6,7 @@ const payToken = async (provider, amount, pubKey) => {
 
   try {
 
-    const NETWORK = "https://solana-mainnet.g.alchemy.com/v2/tAVgt_oYxsFttt0jPbqNDBug1CYH2IRy";
+    const NETWORK = "https://solana-devnet.g.alchemy.com/v2/d7jL5sZiEQrVT4eiUn2O3gtNDVjAWe7u";
     const connection = new Connection(NETWORK);
 
     const MINT_ADDRESS = 'CrkmpA8dx8UXFsRpXd3MD9MJ7r8qkk1U7SZeYHBeY7Px';
