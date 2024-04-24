@@ -241,7 +241,7 @@ const RevivePopup = ({ game, id, revivalStopped, revivesLeft, setRevivesLeft, sh
                 transaction = await paySolana(provider, game?.revivalFee * 1000000000, process.env.NEXT_PUBLIC_JIMBO_KEY)
             }
             else{
-                transaction = await payToken(provider, game?.revivalFee * 10000, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX")
+                transaction = await payToken(provider, game?.revivalFee * 10000, process.env.NEXT_PUBLIC_DEV_KEY)
             }
             if (transaction) {
                 await axios.post(`/api/user/revive/${id}`);
