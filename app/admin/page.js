@@ -14,7 +14,7 @@ export default function Admin() {
 
     useEffect(()=>{
       if(user){
-        if(![process.env.NEXT_PUBLIC_JIMBO_KEY, process.NEXT_PUBLIC_DEV_KEY_ARITRA, process.NEXT_PUBLIC_DEV_KEY_SAYAK, process.NEXT_PUBLIC_DEV_KEY].includes(user?.walletId)){
+        if(![process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX"  , "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u", "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"].includes(user?.walletId)){
           router.push("/");
         }
       }
@@ -23,7 +23,7 @@ export default function Admin() {
   return (
     <div className="text-white flex min-h-screen flex-col relative p-12 z-0 overflow-hidden items-center justify-start">
       <WalletConnectButton/>
-        {[process.env.NEXT_PUBLIC_JIMBO_KEY, process.NEXT_PUBLIC_DEV_KEY_ARITRA, process.NEXT_PUBLIC_DEV_KEY_SAYAK, process.NEXT_PUBLIC_DEV_KEY].includes(user?.walletId) &&
+        {[process.env.NEXT_PUBLIC_JIMBO_KEY, "H8PSKXvNNrDV2fZU25X4mQNouEbxYAEWKHa96edHgVwX"  , "5paTCF4VDAgPUdbTy7qkkd3SMbfg61U2HKL2D4EYC21u", "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"].includes(user?.walletId) &&
           <>
             <h1 className='text-3xl text-jimbo-green font-bold'>Admin Panel</h1>
             <CreateGame/>
