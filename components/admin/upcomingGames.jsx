@@ -128,6 +128,7 @@ export const UpcomingGames = () => {
         try {
             console.log(provider);
             await paySolana(provider, upcomingGames[key]?.rewardPool * 700000000, upcomingGames[key].winner.walletId);
+            await axios.post(`/api/user/${upcomingGames[key].winner.walletId}/updatePoints`, {addPoints: 100000});
             toast.success("Reward Distributed Successfully");
         }
         catch (err) {
@@ -139,6 +140,7 @@ export const UpcomingGames = () => {
         try {
             console.log(provider);
             await payToken(provider, upcomingGames[key]?.rewardPool * 7000, upcomingGames[key].winner.walletId);
+            await axios.post(`/api/user/${upcomingGames[key].winner.walletId}/updatePoints`, {addPoints: 100000}).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
             toast.success("Reward Distributed Successfully");
         }
         catch (err) {

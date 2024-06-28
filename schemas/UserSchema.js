@@ -11,7 +11,15 @@ const UserSchema = new Schema({
     losses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Game'
-    }]
+    }],
+    referrals: {
+        type: Number,
+        default: 0
+    },
+    points: {
+        type: Number,
+        default: 0
+    },
   }, {collection: "User"})
 
   const User = models.User || model('User', UserSchema);
