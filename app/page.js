@@ -105,7 +105,7 @@ const page = () => {
 
       <div className="grid sm:grid-flow-col sm:grid-cols-3 relative z-50 bg-black/30 items-center mx-auto justify-center w-fit text-gray-400 mt-5 border-2 border-orange-500 rounded-2xl sm:h-24 shadow-xl shadow-orange-600/30">
 
-        <button disabled={user || !fetched} onClick={()=>{if(user==null && fetched)setModal(true)}} className={ `sm:h-full h-24 max-sm:rounded-t-xl ${user ? "bg-orange-500/10 text-orange-400" : "bg-orange-500/30 hover:bg-orange-500"} duration-500 sm:rounded-l-xl text-white w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex flex-col`}>{user ? "Completed" : "Name your Warrior"}</button>
+        <button disabled={user || !fetched} onClick={()=>{if(user==null && fetched)setModal(true)}} className={ `sm:h-full h-24 max-sm:rounded-t-xl ${user ? "bg-orange-500/10 text-orange-400" : "bg-orange-500/30 hover:bg-orange-500 text-white"} duration-500 sm:rounded-l-xl w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex flex-col`}>{user ? "Completed" : "Name your Warrior"}</button>
         
    
         <button onClick={()=>{router.push("/market")}} className="sm:h-full h-24 bg-orange-500/30 hover:bg-orange-500 duration-500 text-white w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex">Collect Shards</button>
