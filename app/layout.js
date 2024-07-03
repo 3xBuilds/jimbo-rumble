@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Background from "@/components/global/Background";
 import WalletConnectButton from "@/components/global/WalletConnectButton";
 
+
 const zen = Zen_Dots({ subsets: ["latin"], weight: ['400'] });
 
 export const metadata = {
@@ -14,9 +15,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
-    <html lang="en" className=" w-screen h-screen overflow-hidden bg-black ">
-      <body className={zen.className + " w-screen h-screen overflow-hidden "}>
+    <html lang="en" className=" w-screen h-screen sm:overflow-hidden bg-black ">
+      <body className={zen.className + " w-screen h-screen sm:overflow-hidden"}>
         <Providers>
           <ToastContainer />
           <Background/>
