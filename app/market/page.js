@@ -61,22 +61,6 @@ export default function Home() {
     setReferral(e.target.value);
   }
 
-  async function userFetchCreate(){
-    try{
-      const res = await axios.get(`/api/user/${String(publicKey)}`);
-      if(res.data.user == null){
-        setUserNameModal(true);
-      }
-      else{
-        setUser(res.data.user);
-        setPoints(res.data.user.points)
-        console.log(res.data.user);
-      }
-    }
-    catch(err){
-      console.log(err);
-    }
-  }
 
   async function createUser(){
     try{
@@ -136,9 +120,14 @@ export default function Home() {
   useEffect(()=>{
     if(publicKey){
       fetchBalance();
-      userFetchCreate();
     }
   },[publicKey, loading])
+
+  useEffect(()=>{
+    if(user == null){
+      setUserNameModal(true);
+    }
+  },[user])
 
   return (
     <main className="w-screen sm:p-10 px-4 pt-20 pb-10 sm:h-screen text-white bg-gradient-to-b from-[#0a1021] to-[#00214d]">
