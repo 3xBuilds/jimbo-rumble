@@ -24,7 +24,7 @@ import bg2 from "@/assets/bg-copy.png"
 
 export default function Home() {
   // const [earnings, setEarnings] = useState(0);
-  const [tokens, setTokens] = useState(0);
+  const [fetchedUser, setFetchedUser] = useState(false);
   const {publicKey, user, setUser} = useGlobalContext();
 
   const { provider } = usePhantomProvider();
@@ -42,7 +42,7 @@ export default function Home() {
       const shyft = new ShyftSdk({ apiKey: "AkEA6RnkX6IwV-Ni", network: Network.Mainnet });
       (async () => {
         const bal = await shyft.wallet.getTokenBalance({ wallet: String(publicKey), token: "CrkmpA8dx8UXFsRpXd3MD9MJ7r8qkk1U7SZeYHBeY7Px" });
-        setTokens(bal.balance);
+        // setTokens(bal.balance);
       })();
       
     }
@@ -124,9 +124,11 @@ export default function Home() {
   },[publicKey, loading])
 
   useEffect(()=>{
+    console.log(user)
     if(user == null){
       setUserNameModal(true);
     }
+    setFetchedUser(true);
   },[user])
 
   return (
@@ -136,7 +138,7 @@ export default function Home() {
           <Image src={bg2} className="w-full h-full"/>
       </div>
         <Loader loading={loading}/>
-    {userNameModal && <div className="absolute z-[50] backdrop-blur-3xl w-full h-full top-0 left-0">
+    {userNameModal && fetchedUser && <div className="absolute z-[50] backdrop-blur-3xl w-full h-full top-0 left-0">
         <div className="flex items-center justify-center h-full">
           <div className="bg-gray-900 rounded-xl p-5 border-[1px] border-jimbo-green">
             <button onClick={()=>{setUserNameModal(false)}} className="flex w-full justify-end">

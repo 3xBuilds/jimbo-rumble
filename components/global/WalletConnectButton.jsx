@@ -65,7 +65,7 @@ const WalletConnectButton = () => {
   return (
     <>
       {provider?.isConnected ?
-        <button className={` cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  bg-gradient-to-br ${pathname == "/"?" from-orange-500 to-orange-500/20 text-white" : "text-black from-jimbo-green to-jimbo-black"}  ${pathname == "/market" ?" from-fuchsia-400 to-fuchsia-500/20 text-white" : "text-black from-jimbo-green to-jimbo-black"}`} onClick={handleDisconnect}>
+        <button className={` cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  bg-gradient-to-br ${pathname == "/"?" from-orange-500 to-orange-500/20 text-white" : "text-black from-jimbo-green to-jimbo-black "}  ${pathname == "/market" ?" from-fuchsia-400 to-fuchsia-500/20 text-white " : " text-black from-jimbo-green to-jimbo-black "}`} onClick={handleDisconnect}>
           {user == null? publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Hi! <span className="font-bold">{user.username} | {user?.points ? user.points : "--"}</span></h2> }
         </button> :
         <button className={` cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12 bg-gradient-to-br ${pathname == "/"?" from-orange-500 to-orange-500/20 text-white" : "text-black from-jimbo-green to-jimbo-black"} ${pathname == "/market" ?" from-fuchsia-400 to-fuchsia-500/20 text-white" : "text-black from-jimbo-green to-jimbo-black"}`} onClick={handleConnect}>

@@ -18,7 +18,7 @@ export const GlobalContextProvider = ({ children }) => {
 
   const [loader, setLoader] = useState(false);
   const [publicKey, setPublicKey] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   async function checkExistingUser(){
     try{
@@ -28,9 +28,6 @@ export const GlobalContextProvider = ({ children }) => {
       if(res.data.user){
         setUser(res.data.user);
 
-        // if(res.data.user.walletId == "4X4eo2nJEnbCp74YNgzeZsSFno5YuV8qPrdzDKDDFyV7"){
-        //   router.push("/admin");
-        // }
       }else{
         setUser(null);
       }
