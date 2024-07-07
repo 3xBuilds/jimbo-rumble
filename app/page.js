@@ -63,7 +63,7 @@ const page = () => {
 
   const router = useRouter();
   return (
-    <div className="bg-gradient-to-b text-white text-center from-[#0a1021] to-[#00214d] sm:p-10 p-4 py-16 w-full min-h-screen max-sm:overflow-y-scroll">
+    <div className="bg-gradient-to-b text-white justify-center flex flex-col text-center from-[#0a1021] to-[#00214d] sm:p-10 p-4 py-16 w-full min-h-screen max-sm:overflow-y-scroll">
       {/* <WalletConnectButton/> */}
       <div className="relative flex justify-center mt-5 z-[50]">
         <h3 className="mx-auto text-orange-500 sm:text-[2.8rem] text-[1.8rem]">JIMBO Upgrade</h3>
@@ -72,7 +72,7 @@ const page = () => {
     <WalletConnectButton/>
 
       <div className="absolute top-0 left-0 w-full">
-        <Image src={bg2} className="w-full h-full"/>
+        <Image src={bg2} className="w-full opacity-70 h-full"/>
       </div>
 
           {/* <Image src={bg} className="opacity-70" /> */}
@@ -113,13 +113,13 @@ const page = () => {
         <div className="sm:h-full h-24 w-72 justify-center hover:cursor-not-allowed items-center flex">Upgrade your Jimbo</div>
       </div>
 
-      <div className="relative z-50">
+      {/* <div className="relative z-50">
         <h3 className="text-[1.5rem] mt-10"><span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Burn</span> more, <span className="bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent">Earn</span> more</h3>
         
         <p className="text-sm text-gray-400 mx-auto mt-2 sm:w-[70%] w-[90%]">Burn your $JIMBO tokens or spend SOL to gather the magical shards.</p>
         <p className="text-sm text-gray-400 mx-auto mt-2 sm:w-[70%] w-[90%]">Use these to customize & build your own JIMBO NFT!</p>
 
-      </div>
+      </div> */}
     </div>
   )
 }
