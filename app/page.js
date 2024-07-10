@@ -12,6 +12,7 @@ import Background from '@/components/global/Background';
 import { ImCross } from 'react-icons/im';
 import { useGlobalContext } from '@/context/MainContext';
 import axios from 'axios';
+import WalletConnectButtonElse from '@/components/global/WalletConnectButtonNotRumble';
 
 const page = () => {
 
@@ -29,16 +30,6 @@ const page = () => {
     setUsername(e.target.value);
   }
 
-  // async function userFetchCreate(){
-  //   try{
-  //     const res = await axios.get(`/api/user/${String(publicKey)}`);
-  //       setUser(res.data.user);
-  //       console.log(res.data.user);
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
-  // }
 
   async function createUser(){
     try{
@@ -69,7 +60,7 @@ const page = () => {
         <h3 className="mx-auto text-orange-500 sm:text-[2.8rem] text-[1.8rem]">JIMBO Upgrade</h3>
         <h3 className="mx-auto absolute top-1 blur-[30px] text-orange-500 sm:text-[3rem] text-[1.7rem]">JIMBO Upgrade</h3>
       </div>
-    <WalletConnectButton/>
+    <WalletConnectButtonElse/>
 
       <div className="absolute top-0 left-0 w-full">
         <Image src={bg2} className="w-full opacity-70 h-full"/>
