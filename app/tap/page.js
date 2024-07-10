@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion, useSpring, AnimatePresence } from 'framer-motion'
 import { Line } from 'rc-progress';
 import Image from 'next/image';
@@ -9,16 +9,21 @@ import WalletConnectButton from '@/components/global/WalletConnectButton';
 import WalletConnectButtonElse from '@/components/global/WalletConnectButtonNotRumble';
 import { useGlobalContext } from '@/context/MainContext';
 import axios from 'axios';
-
+import { ImCross } from 'react-icons/im';
 export default function Page() {
-  const {fetch, setFetch, publicKey} = useGlobalContext();
+  const {fetch, setFetch, publicKey, user} = useGlobalContext();
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
 
+  const [referral, setReferral] = useState("");
   const divRef = useRef(null);
   const [taps, setTaps] = useState(0);
   const [clickEffect, setClickEffect] = useState(null);
   const [goal, setGoal] = useState(100);
   const[level, setLevel] = useState(0);
   const[divide, setDivide] = useState(1);
+
+  const [modal, setModal] = useState(false);
 
   const springConfig = { damping: 25, stiffness: 200 };
   const x = useSpring(0, springConfig);
@@ -34,6 +39,26 @@ export default function Page() {
       y.set(newY);
     }
   };
+
+  async function createUser(){
+    try{
+      if(username != ""){
+        console.log("page.js", referral);
+        await axios.post("/api/user/create", {walletId: String(publicKey), username: username, referral: referral});
+        window.location.reload();
+      }
+    }
+    catch(err){
+      console.log(err);
+      setError(err.response.data.error);
+    }
+  }
+
+  useEffect(()=>{
+    if(!user){
+      setModal(true);
+    }
+  },[publicKey, user])
 
   const handleMouseLeave = () => {
     x.set(0);
@@ -64,9 +89,33 @@ export default function Page() {
     }
   }
 
+  function handleUserName(e){
+    setError("");
+    setUsername(e.target.value);
+  }
+
+  function handleReferral(e){
+    setError("");
+    setReferral(e.target.value);
+  }
+
   return (
     <div className='bg-gradient-to-b text-white items-center flex flex-col text-center from-[#0a1021] to-[#00214d] sm:p-16 p-4 pt-20 pb-4 w-full min-h-screen max-sm:overflow-y-scroll'>
-      
+      {modal && <div className="absolute z-[100] backdrop-blur-3xl w-full h-full top-0 left-0">
+        <div className="flex items-center justify-center h-full">
+          <div className="bg-gray-900 rounded-xl p-5 border-[1px] border-orange-400">
+            <button onClick={()=>{setModal(false)}} className="flex w-full justify-end">
+              <ImCross className="text-red-500 hover:text-red-400 duration-200"/>
+            </button>
+            <h2 className="text-orange-400 mb-3 ">Set Username</h2>
+            <input onChange={handleUserName} value={username} className="bg-gray-800 text-white p-2 w-full rounded-xl" placeholder="Enter name"></input>
+            <h2 className="text-orange-400  mb-3 mt-5">Referral Username</h2>
+            <input onChange={handleReferral} value={referral} className="bg-gray-800 text-white p-2 w-full mb-3 rounded-xl" placeholder="Optional"></input>
+            <p className="text-sm text-red-500 mt-2">{error}</p>
+            <button onClick={createUser} className="w-full p-3 bg-gradient-to-br from-orange-400 to-orange-500 rounded-xl mt-3 hover:brightness-125 duration-200">Submit</button>
+          </div>
+        </div>
+      </div>}
       <WalletConnectButtonElse/>
       <h1 className='text-4xl prevent-select'>TAP!</h1>
 
