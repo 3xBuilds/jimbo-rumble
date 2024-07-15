@@ -9,17 +9,21 @@ import ogjim from "@/assets/jimog.png"
 import { useState } from 'react';
 import bg2 from "@/assets/bg-copy.png"
 import Background from '@/components/global/Background';
-import { ImCross } from 'react-icons/im';
+import { IoIosArrowDown } from "react-icons/io";
 import { useGlobalContext } from '@/context/MainContext';
 import axios from 'axios';
 import WalletConnectButtonElse from '@/components/global/WalletConnectButtonNotRumble';
+import { AiTwotoneShop } from "react-icons/ai";
+import { PiHandTapLight } from "react-icons/pi";
+import { IoIosShareAlt } from "react-icons/io";
+
 
 const page = () => {
 
   const {user, setUser, publicKey} = useGlobalContext();
   const [fetched, setFetched] = useState(false);
   const [modal, setModal] = useState(false);
-
+  const [openModal, setOpenModal] = useState(false);
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
 
@@ -50,11 +54,22 @@ const page = () => {
     setReferral(e.target.value);
   }
 
+  function bringModal(){
+    console.log(document.getElementById("shardModal").classList);
+    document.getElementById("shardModal").classList.remove("translate-y-[30rem]");
+    document.getElementById("shardModal").classList.add("sm:translate-y-0");
+    document.getElementById("shardModal").classList.add("-translate-y-[35rem]");
+  }
 
+  function removeModal(){
+    document.getElementById("shardModal").classList.remove("-translate-y-[35rem]");
+    document.getElementById("shardModal").classList.remove("sm:translate-y-0");
+    document.getElementById("shardModal").classList.add("translate-y-[30rem]");
+  }
 
   const router = useRouter();
   return (
-    <div className="bg-gradient-to-b text-white justify-center flex flex-col text-center from-[#0a1021] to-[#00214d] sm:p-10 p-4 py-16 w-full min-h-screen max-sm:overflow-y-scroll">
+    <div className="bg-gradient-to-b text-white overflow-hidden flex flex-col text-center from-[#0a1021] to-[#00214d] sm:p-10 p-4 py-16 w-full min-h-screen max-h-screen">
       {/* <WalletConnectButton/> */}
       <div className="relative flex justify-center mt-5 z-[50]">
         <h3 className="mx-auto text-orange-500 sm:text-[2.8rem] text-[1.8rem]">JIMBO Upgrade</h3>
@@ -93,17 +108,28 @@ const page = () => {
         </div>
       </div>}
 
+        <div className='relative'>
+        <div className="grid sm:grid-flow-col sm:grid-cols-3 relative z-50 bg-black/30 items-center mx-auto justify-center w-fit text-gray-400 mt-5 border-2 border-orange-500 rounded-2xl sm:h-24 shadow-xl shadow-orange-600/30">
 
-      <div className="grid sm:grid-flow-col sm:grid-cols-3 relative z-50 bg-black/30 items-center mx-auto justify-center w-fit text-gray-400 mt-5 border-2 border-orange-500 rounded-2xl sm:h-24 shadow-xl shadow-orange-600/30">
+          <button disabled={user || !fetched} onClick={()=>{if(user==null && fetched)setModal(true)}} className={ `sm:h-full h-24 max-sm:rounded-t-xl ${user ? "bg-orange-500/10 text-orange-400" : "bg-orange-500/30 hover:bg-orange-500 text-white"} duration-500 sm:rounded-l-xl w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex flex-col`}>{user ? "Completed" : "Name your Warrior"}</button>
+          
+    
+          <button onClick={()=>{bringModal()}} className="sm:h-full h-24 bg-orange-500/30 hover:bg-orange-500 duration-500 text-white w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex">Collect Shards</button>
+          
+          <div className="sm:h-full h-24 w-72 justify-center hover:cursor-not-allowed items-center flex">Upgrade your Jimbo</div>
+        </div>
 
-        <button disabled={user || !fetched} onClick={()=>{if(user==null && fetched)setModal(true)}} className={ `sm:h-full h-24 max-sm:rounded-t-xl ${user ? "bg-orange-500/10 text-orange-400" : "bg-orange-500/30 hover:bg-orange-500 text-white"} duration-500 sm:rounded-l-xl w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex flex-col`}>{user ? "Completed" : "Name your Warrior"}</button>
-        
-   
-        <button onClick={()=>{router.push("/market")}} className="sm:h-full h-24 bg-orange-500/30 hover:bg-orange-500 duration-500 text-white w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex">Collect Shards</button>
-        
-        <div className="sm:h-full h-24 w-72 justify-center hover:cursor-not-allowed items-center flex">Upgrade your Jimbo</div>
-      </div>
+          
+          <div id="shardModal" className='flex flex-col relative w-fit mx-auto items-center translate-y-[30rem] duration-200 bg-black/20 p-4 rounded-xl justify-center gap-2 z-50'>
+            <div className='flex sm:flex-row flex-col gap-2'>
+              <button className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' onClick={()=>{router.push("/market")}}><AiTwotoneShop className='text-3xl'/></button>
+              <button className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' onClick={()=>{router.push("/tap")}} ><PiHandTapLight className='text-3xl'/></button>
+              <a target='_blank' className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' href="https://x.com/intent/post?text=Join+the+adventure+with+%40JIMSRPG!%0A%0AFollow+us+and+turn+on+notifications+for+the+latest+updates.+🧙%E2%80%8D♂%EF%B8%8F⚔%EF%B8%8F%0A%0AJoin+the+adventure+at+jimsrpg.com%0A%23JIMSRPG+%23GameFi+%23CryptoGaming" onClick={()=>{router.push("/tap")}} ><IoIosShareAlt className='text-3xl'/></a>
+            </div>
+            <button onClick={()=>{removeModal()}}  className='hover:text-red-500 duration-200'><IoIosArrowDown className='text-2xl' /></button>
+          </div>
 
+        </div>
       {/* <div className="relative z-50">
         <h3 className="text-[1.5rem] mt-10"><span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Burn</span> more, <span className="bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent">Earn</span> more</h3>
         
