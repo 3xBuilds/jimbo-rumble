@@ -80,7 +80,7 @@ const page = () => {
           <div className="top-0 left-0 absolute w-full h-[95vh] overflow-hidden rounded-xl">
             <Image src={bg2} className="w-full"/>
           </div>
-          <div className='w-full h-full relative p-6 flex flex-col items-start justify-end'>
+          <div className='w-full h-[95vh] relative p-6 flex flex-col items-start justify-end'>
             <div className='h-[90vh] w-full bg-gradient-to-b from-transparent to-black/70 absolute z-50 top-20 left-0' ></div>
             <Image src={jimboTeam} className="w-[85%] mx-auto mt-20"/>
             <div className='h-full z-50 flex flex-col justify-end items-end mt-10'>
@@ -96,17 +96,17 @@ const page = () => {
           </div>
 
             <div className='flex flex-col gap-5 h-full justify-end -translate-y-10' >
-              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+              <div className='rounded-xl overflow-hidden h-[25vh] relative group cursor-pointer' >
                 <Image src={play} className='-translate-y-40 group-hover:brightness-110 duration-200' />
                 <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >PLAY</div>
               </div>
 
-              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+              <div className='rounded-xl overflow-hidden h-[25vh] relative group cursor-pointer' >
                 <Image src={create} className='-translate-y-40 group-hover:brightness-110 duration-200' />
                 <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >CREATE</div>
               </div>
 
-              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+              <div className='rounded-xl overflow-hidden h-[25vh] relative group cursor-pointer' >
                 <Image src={share} className='-translate-y-40 group-hover:brightness-110 duration-200' />
                 <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >SHARE</div>
               </div>
