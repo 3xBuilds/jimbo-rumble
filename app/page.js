@@ -87,7 +87,7 @@ const page = () => {
               <h1 className='text-[8rem] leading-[50px]' >JIMSRPG</h1>
               <h3 className='text-[4.2rem]'>BE ADVENTUROUS</h3>
             </div>
-            <a href='https://x.com/jimsrpg' className='bg-black w-16 h-16 rounded-tl-xl duration-200 hover:w-[4.2rem] hover:h-[4.2rem] z-50 absolute bottom-0 right-0 flex items-center justify-center cursor-pointer'><FaXTwitter className='text-2xl' /></a>
+            <a href='https://x.com/jimsrpg' target='_blank' className='bg-black w-16 h-16 rounded-tl-xl duration-200 hover:w-[4.2rem] hover:h-[4.2rem] z-50 absolute bottom-0 right-0 flex items-center justify-center cursor-pointer'><FaXTwitter className='text-2xl' /></a>
           </div>
         </div>
         <div className='col-span-1 bg-black pl-4 rounded-r-xl h-screen relative z-50'>
