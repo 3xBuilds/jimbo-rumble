@@ -65,10 +65,10 @@ const WalletConnectButtonElse = () => {
   return (
     <>
       {provider?.isConnected ?
-        <button className={` cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12  bg-gradient-to-br text-white from-orange-500/10 to-orange-500/70`} onClick={handleDisconnect}>
-          {user == null? publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2>Hi! <span className="font-bold">{user.username} | {user?.points ? user.points : "--"}</span></h2> }
+        <button className={` cursor-pointer rounded-xl px-8 py-3 absolute top-4 right-4 z-10 text-white bg-black border-[1px] border-white duration-200 hover:-translate-y-1`} onClick={handleDisconnect}>
+          {user == null? publicKey?.toString().slice(0, 6) + "..." + publicKey?.toString().slice(-6) : <h2 className="text-xl" ><span className="font-bold">{user.username} | {user?.points ? user.points.toLocaleString() : "--"}</span></h2> }
         </button> :
-        <button className={` cursor-pointer rounded-l-full px-8 py-3 absolute top-4 right-0 z-10 h-12 bg-gradient-to-br text-white from-orange-500/10 to-orange-500/70`} onClick={handleConnect}>
+        <button className={`cursor-pointer rounded-xl px-8 py-3 absolute top-4 right-4 z-10 text-white bg-black border-[1px] border-white duration-200 hover:-translate-y-1`} onClick={handleConnect}>
           Wallet Connect
         </button>
       }

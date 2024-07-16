@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { GoDotFill } from "react-icons/go";
 import ogjim from "@/assets/jimog.png"
 import { useState } from 'react';
-import bg2 from "@/assets/bg-copy.png"
+import bg2 from "@/assets/bgGamified.png"
 import Background from '@/components/global/Background';
 import { IoIosArrowDown } from "react-icons/io";
 import { useGlobalContext } from '@/context/MainContext';
@@ -16,7 +16,12 @@ import WalletConnectButtonElse from '@/components/global/WalletConnectButtonNotR
 import { AiTwotoneShop } from "react-icons/ai";
 import { PiHandTapLight } from "react-icons/pi";
 import { IoIosShareAlt } from "react-icons/io";
+import jimboTeam from "@/assets/jimboteam.png"
+import { FaXTwitter } from "react-icons/fa6";
 
+import create from "@/assets/create.png"
+import play from "@/assets/play.png"
+import share from "@/assets/share.png"
 
 const page = () => {
 
@@ -67,76 +72,50 @@ const page = () => {
     document.getElementById("shardModal").classList.add("translate-y-[30rem]");
   }
 
-  const router = useRouter();
   return (
-    <div className="bg-gradient-to-b text-white overflow-hidden flex flex-col text-center from-[#0a1021] to-[#00214d] sm:p-10 p-4 py-16 w-full min-h-screen max-h-screen">
-      {/* <WalletConnectButton/> */}
-      <div className="relative flex justify-center mt-5 z-[50]">
-        <h3 className="mx-auto text-orange-500 sm:text-[2.8rem] text-[1.8rem]">JIMBO Upgrade</h3>
-        <h3 className="mx-auto absolute top-1 blur-[30px] text-orange-500 sm:text-[3rem] text-[1.7rem]">JIMBO Upgrade</h3>
-      </div>
-    <WalletConnectButtonElse/>
-
-      <div className="absolute top-0 left-0 w-full">
-        <Image src={bg2} className="w-full opacity-70 h-full"/>
-      </div>
-
-          {/* <Image src={bg} className="opacity-70" /> */}
-
-      <div className="relative z-50">
-        <h3 className="text-gray-300">A platform to showcase your <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-600">Creativity</span></h3>
-      </div>
-
-      <div className="relative z-50 ">
-        <Image src={ogjim} className="sm:w-[20%] shadow-xl mx-auto w-[80%]"/>
-
-      </div>
-
-      {modal && <div className="absolute z-[100] backdrop-blur-3xl w-full h-full top-0 left-0">
-        <div className="flex items-center justify-center h-full">
-          <div className="bg-gray-900 rounded-xl p-5 border-[1px] border-orange-400">
-            <button onClick={()=>{setModal(false)}} className="flex w-full justify-end">
-              <ImCross className="text-red-500 hover:text-red-400 duration-200"/>
-            </button>
-            <h2 className="text-orange-400 mb-3 ">Set Username</h2>
-            <input onChange={handleUserName} value={username} className="bg-gray-800 text-white p-2 w-full rounded-xl" placeholder="Enter name"></input>
-            <h2 className="text-orange-400  mb-3 mt-5">Referral Username</h2>
-            <input onChange={handleReferral} value={referral} className="bg-gray-800 text-white p-2 w-full mb-3 rounded-xl" placeholder="Optional"></input>
-            <p className="text-sm text-red-500 mt-2">{error}</p>
-            <button onClick={createUser} className="w-full p-3 bg-gradient-to-br from-orange-400 to-orange-500 rounded-xl mt-3 hover:brightness-125 duration-200">Submit</button>
+    <div className="bg-black text-white w-full p-4 max-h-screen overflow-y-hidden">
+      
+      <div className='grid grid-flow-cols grid-cols-5 h-fit relative z-50 rounded-xl'>
+        <div className='col-span-4 flex items-center relative justify-center h-fit'>
+          <div className="top-0 left-0 absolute w-full h-[95vh] overflow-hidden rounded-xl">
+            <Image src={bg2} className="w-full"/>
           </div>
-        </div>
-      </div>}
-
-        <div className='relative'>
-        <div className="grid sm:grid-flow-col sm:grid-cols-3 relative z-50 bg-black/30 items-center mx-auto justify-center w-fit text-gray-400 mt-5 border-2 border-orange-500 rounded-2xl sm:h-24 shadow-xl shadow-orange-600/30">
-
-          <button disabled={user || !fetched} onClick={()=>{if(user==null && fetched)setModal(true)}} className={ `sm:h-full h-24 max-sm:rounded-t-xl ${user ? "bg-orange-500/10 text-orange-400" : "bg-orange-500/30 hover:bg-orange-500 text-white"} duration-500 sm:rounded-l-xl w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex flex-col`}>{user ? "Completed" : "Name your Warrior"}</button>
-          
-    
-          <button onClick={()=>{bringModal()}} className="sm:h-full h-24 bg-orange-500/30 hover:bg-orange-500 duration-500 text-white w-72 sm:border-r-2 max-sm:border-b-2 border-orange-400 pr-4 justify-center items-center flex">Collect Shards</button>
-          
-          <div className="sm:h-full h-24 w-72 justify-center hover:cursor-not-allowed items-center flex">Upgrade your Jimbo</div>
-        </div>
-
-          
-          <div id="shardModal" className='flex flex-col relative w-fit mx-auto items-center translate-y-[30rem] duration-200 bg-black/20 p-4 rounded-xl justify-center gap-2 z-50'>
-            <div className='flex sm:flex-row flex-col gap-2'>
-              <button className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' onClick={()=>{router.push("/market")}}><AiTwotoneShop className='text-3xl'/></button>
-              <button className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' onClick={()=>{router.push("/tap")}} ><PiHandTapLight className='text-3xl'/></button>
-              <a target='_blank' className='w-44 h-28 bg-orange-500 hover:bg-orange-400 hover:-translate-y-1 duration-200 rounded-xl flex items-center justify-center' href="https://x.com/intent/post?text=Join+the+adventure+with+%40JIMSRPG!%0A%0AFollow+us+and+turn+on+notifications+for+the+latest+updates.+🧙%E2%80%8D♂%EF%B8%8F⚔%EF%B8%8F%0A%0AJoin+the+adventure+at+jimsrpg.com%0A%23JIMSRPG+%23GameFi+%23CryptoGaming" onClick={()=>{router.push("/tap")}} ><IoIosShareAlt className='text-3xl'/></a>
+          <div className='w-full h-full relative p-6 flex flex-col items-start justify-end'>
+            <div className='h-[90vh] w-full bg-gradient-to-b from-transparent to-black/70 absolute z-50 top-20 left-0' ></div>
+            <Image src={jimboTeam} className="w-[85%] mx-auto mt-20"/>
+            <div className='h-full z-50 flex flex-col justify-end items-end mt-10'>
+              <h1 className='text-[8rem] leading-[50px]' >JIMSRPG</h1>
+              <h3 className='text-[4.2rem]'>BE ADVENTUROUS</h3>
             </div>
-            <button onClick={()=>{removeModal()}}  className='hover:text-red-500 duration-200'><IoIosArrowDown className='text-2xl' /></button>
+            <a href='https://x.com/jimsrpg' className='bg-black w-16 h-16 rounded-tl-xl duration-200 hover:w-[4.2rem] hover:h-[4.2rem] z-50 absolute bottom-0 right-0 flex items-center justify-center cursor-pointer'><FaXTwitter className='text-2xl' /></a>
+          </div>
+        </div>
+        <div className='col-span-1 bg-black pl-4 rounded-r-xl h-screen relative z-50'>
+          <div>
+            <WalletConnectButtonElse/>  
           </div>
 
-        </div>
-      {/* <div className="relative z-50">
-        <h3 className="text-[1.5rem] mt-10"><span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Burn</span> more, <span className="bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent">Earn</span> more</h3>
-        
-        <p className="text-sm text-gray-400 mx-auto mt-2 sm:w-[70%] w-[90%]">Burn your $JIMBO tokens or spend SOL to gather the magical shards.</p>
-        <p className="text-sm text-gray-400 mx-auto mt-2 sm:w-[70%] w-[90%]">Use these to customize & build your own JIMBO NFT!</p>
+            <div className='flex flex-col gap-5 h-full justify-end -translate-y-10' >
+              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+                <Image src={play} className='-translate-y-40 group-hover:brightness-110 duration-200' />
+                <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >PLAY</div>
+              </div>
 
-      </div> */}
+              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+                <Image src={create} className='-translate-y-40 group-hover:brightness-110 duration-200' />
+                <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >CREATE</div>
+              </div>
+
+              <div className='rounded-xl overflow-hidden h-[13rem] relative group cursor-pointer' >
+                <Image src={share} className='-translate-y-40 group-hover:brightness-110 duration-200' />
+                <div className='bg-black absolute bottom-0 right-0 p-2 group-hover:p-3 duration-200 rounded-tl-xl' >SHARE</div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+
+          
     </div>
   )
 }

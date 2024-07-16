@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import bg from '../../assets/bg.png'
-import bg2 from "@/assets/bg-copy.png"
+import bg2 from "@/assets/bgGamified.png"
 import { usePathname } from 'next/navigation'
 
 const Background = () => {

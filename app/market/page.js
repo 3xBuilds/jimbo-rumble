@@ -19,7 +19,7 @@ import crystal4 from "@/assets/crystals/4.png"
 import crystal5 from "@/assets/crystals/5.png"
 import Background from "@/components/global/Background";
 
-import bg2 from "@/assets/bg-copy.png"
+import bg2 from "@/assets/bgGamified.png"
 import WalletConnectButtonElse from "@/components/global/WalletConnectButtonNotRumble";
 
 
@@ -136,7 +136,7 @@ export default function Home() {
     <main className="w-screen sm:p-10 px-4 pt-20 pb-10 sm:h-screen text-white bg-gradient-to-b from-[#0a1021] to-[#00214d]">
         <WalletConnectButtonElse/>
         <div className="absolute top-0 left-0 w-full -z-5">
-          <Image src={bg2} className="w-full opacity-70 h-full"/>
+          <Image src={bg2} className="w-full h-full"/>
       </div>
         <Loader loading={loading}/>
     {userNameModal && fetchedUser && <div className="absolute z-[50] backdrop-blur-3xl w-full h-full top-0 left-0">
