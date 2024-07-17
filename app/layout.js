@@ -10,8 +10,8 @@ import { Lilita_One } from "next/font/google";
 const zen = Lilita_One({ subsets: ["latin"], weight: ['400'] });
 
 export const metadata = {
-  title: "Jimbos Rumble",
-  description: "NFT Battle Royale",
+  title: "Jims RPG",
+  description: "Join the adventure!",
 };
 
 export default function RootLayout({ children }) {
