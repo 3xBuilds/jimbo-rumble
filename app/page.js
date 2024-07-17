@@ -76,9 +76,7 @@ const page = () => {
 
   return (
     <div className="bg-black text-white w-full p-4 max-h-screen overflow-y-hidden">
-        <div className='relative w-full md:hidden bottom-5'>
-            <WalletConnectButtonElse/>  
-        </div>
+        
 
       
       <div className='md:grid md:grid-flow-cols md:grid-cols-5 h-fit relative z-50 rounded-xl'>
@@ -87,11 +85,15 @@ const page = () => {
             <Image src={bg2} className="w-screen h-screen"/>
           </div>
 
+          <div className='absolute w-full md:hidden -top-5'>
+            <WalletConnectButtonElse/>  
+          </div>
+
           <button onClick={bringModal} className='absolute z-[100] hover:-translate-y-1 duration-200 md:hidden top-4 left-4 bg-black p-3 rounded-xl'>
             <GiHamburgerMenu/>
           </button>
 
-          <div id='shardModal' className='translate-y-[50rem] md:hidden gap-5 border-t-4 border-t-black duration-200 flex flex-col items-center justify-start rounded-t-xl absolute z-[200] bg-[#ffe47c] h-screen w-screen p-4' >
+          <div id='shardModal' className='translate-y-[50rem] md:hidden gap-5 border-t-4 border-t-black duration-200 flex flex-col items-center justify-start rounded-t-xl absolute z-[400] bg-[#ffe47c] h-screen w-screen p-4' >
               <div className='flex justify-center w-full' >
                 <button className='w-full h-10 flex items-center mx-auto' onClick={removeModal} ><IoIosArrowDown className='text-black hover:text-red-500 mx-auto text-4xl duration-200'/></button>
               </div>
