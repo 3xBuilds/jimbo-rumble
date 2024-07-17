@@ -75,13 +75,13 @@ const page = () => {
   }
 
   return (
-    <div className="bg-black text-white w-full p-4 max-h-screen overflow-y-hidden">
+    <div className="bg-black text-white w-full p-4 max-h-[100dvh] overflow-y-hidden">
         
 
       
       <div className='md:grid md:grid-flow-cols md:grid-cols-5 h-fit relative z-50 rounded-xl'>
         <div className='col-span-4 flex items-center relative justify-center h-fit'>
-          <div className="top-0 left-0 absolute w-full h-[95vh] object-contain overflow-hidden rounded-xl">
+          <div className="top-0 left-0 absolute w-full h-[95dvh] object-contain overflow-hidden rounded-xl">
             <Image src={bg2} className="w-screen h-screen"/>
           </div>
 
