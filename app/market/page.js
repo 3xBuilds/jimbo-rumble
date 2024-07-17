@@ -133,11 +133,11 @@ export default function Home() {
   },[user])
 
   return (
-    <main className="w-screen sm:p-10 px-4 pt-20 pb-10 sm:h-screen text-white bg-gradient-to-b from-[#0a1021] to-[#00214d]">
+    <main className="w-screen md:p-10 px-4 pt-20 pb-10 md:h-screen text-white bg-gradient-to-b from-[#0a1021] to-[#00214d]">
         <WalletConnectButtonElse/>
-        <div className="absolute top-0 left-0 w-full -z-5">
-          <Image src={bg2} className="w-full h-full"/>
-      </div>
+        <div className="top-0 left-0 fixed w-full object-contain z-[0] overflow-hidden">
+            <Image src={bg2} className="w-screen h-screen"/>
+          </div>
         <Loader loading={loading}/>
     {userNameModal && fetchedUser && <div className="absolute z-[50] backdrop-blur-3xl w-full h-full top-0 left-0">
         <div className="flex items-center justify-center h-full">
@@ -156,30 +156,27 @@ export default function Home() {
       </div>}
       
       <div className="relative flex justify-center mt-5">
-        <div className="flex items-center gap-5">
-          <FaStore className="sm:text-[2.5rem] text-[1.7rem] text-fuchsia-400 shadow-2xl shadow-fuchsia-500"/>
-          <h3 className="mx-auto text-fuchsia-500 sm:text-[2.5rem] text-[1.7rem]">Points Store</h3>
+       
+          <h3 className="mx-auto text-black md:text-[3rem] text-[2.5rem]">Points Store</h3>
         </div>
-        <h3 className="mx-auto absolute top-1 blur-[25px] text-fuchsia-600 sm:text-[2.5rem] text-[1.7rem]">Points Store</h3>
-      </div>
       
-      <div className=" mt-10">
+      <div className=" mt-4">
         
-      <div className="bg-white/5 px-5 py-10 rounded-xl">
-        <div className="sm:grid sm:grid-flow-col sm:grid-cols-2 gap-10 text-center mb-5 hidden">
-          <h4 className="text-[1.5rem]">JIMBO Points Packs</h4>
+      <div className="bg-black/20 px-5 py-10 rounded-xl relative z-[10]">
+        <div className="md:grid md:grid-flow-col md:grid-cols-2 gap-10 text-center mb-5 hidden">
+          <h4 className="text-[1.5rem]">$JIMBO Points Packs</h4>
           <h4 className="text-[1.5rem]">SOL Points Packs</h4>
         </div>
       <div className="col-span-2 row-span-2 ">
 
-        <div className="sm:grid sm:grid-flow-col sm:grid-cols-2 gap-10">
-          <div className="sm:grid gap-3 sm:grid-flow-col sm:grid-cols-3 ">
-          <h4 className="my-5 sm:hidden flex justify-center">JIMBO Points Packs</h4>
-              <div className="sm:col-span-2 gap-3 sm:grid sm:grid-flow-col sm:grid-cols-2">
-                  <div className="sm:grid sm:grid-flow-row sm:grid-rows-2 sm:gap-3">
+        <div className="md:grid md:grid-flow-col md:grid-cols-2 gap-10">
+          <div className="md:grid gap-3 md:grid-flow-col md:grid-cols-3 ">
+          <h4 className="my-5 md:hidden flex justify-center">JIMBO Points Packs</h4>
+              <div className="md:col-span-2 gap-3 md:grid md:grid-flow-col md:grid-cols-2">
+                  <div className="md:grid md:grid-flow-row md:grid-rows-2 md:gap-3">
                       
                       {/* box1 */}
-                      <button onClick={()=>{burnToken(80000, 40)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{burnToken(80000, 40)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">40</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal1}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -188,7 +185,7 @@ export default function Home() {
                       </button>
 
                       {/* box2 */}
-                      <button onClick={()=>{burnToken(200000, 220)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{burnToken(200000, 220)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">220</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal2}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -196,10 +193,10 @@ export default function Home() {
                           </div>
                       </button>
                   </div>
-                  <div className="sm:grid sm:grid-flow-row sm:grid-rows-2 sm:gap-3">
+                  <div className="md:grid md:grid-flow-row md:grid-rows-2 md:gap-3">
 
                     {/* box3 */}
-                  <button onClick={()=>{burnToken(400000, 480)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                  <button onClick={()=>{burnToken(400000, 480)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">480</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal3}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -208,7 +205,7 @@ export default function Home() {
                       </button>
 
                       {/* box4 */}
-                      <button onClick={()=>{burnToken(1000000, 1200)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{burnToken(1000000, 1200)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">1200</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal4}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -219,7 +216,7 @@ export default function Home() {
               </div>
 
               {/* box5 */}
-              <button onClick={()=>{burnToken(2000000, 2100)}} className="sm:my-0 my-4 h-full text-center flex items-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+              <button onClick={()=>{burnToken(2000000, 2100)}} className="md:my-0 my-4 h-full text-center flex items-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">2100</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal5}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -228,13 +225,13 @@ export default function Home() {
               </button>
           </div>
 
-          <div className="sm:grid gap-5 sm:grid-flow-col sm:grid-cols-3 ">
-          <h4 className="my-5 sm:hidden flex justify-center">SOL Points Packs</h4>
-          <div className="sm:col-span-2 gap-3 sm:grid sm:grid-flow-col sm:grid-cols-2">
-                  <div className="sm:grid sm:grid-flow-row sm:grid-rows-2 sm:gap-3">
+          <div className="md:grid gap-5 md:grid-flow-col md:grid-cols-3 ">
+          <h4 className="my-5 md:hidden flex justify-center">SOL Points Packs</h4>
+          <div className="md:col-span-2 gap-3 md:grid md:grid-flow-col md:grid-cols-2">
+                  <div className="md:grid md:grid-flow-row md:grid-rows-2 md:gap-3">
                       
                       {/* box1 */}
-                      <button onClick={()=>{buyXP(0.06, 350)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{buyXP(0.06, 350)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">350</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal1}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -243,7 +240,7 @@ export default function Home() {
                       </button>
 
                       {/* box2 */}
-                      <button onClick={()=>{buyXP(0.12, 720)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{buyXP(0.12, 720)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">720</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal2}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -251,10 +248,10 @@ export default function Home() {
                           </div>
                       </button>
                   </div>
-                  <div className="sm:grid sm:grid-flow-row sm:grid-rows-2 sm:gap-3">
+                  <div className="md:grid md:grid-flow-row md:grid-rows-2 md:gap-3">
 
                     {/* box3 */}
-                  <button onClick={()=>{buyXP(0.25, 1500)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                  <button onClick={()=>{buyXP(0.25, 1500)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">1500</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal3}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -263,7 +260,7 @@ export default function Home() {
                       </button>
 
                       {/* box4 */}
-                      <button onClick={()=>{buyXP(0.5, 3500)}} className="sm:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+                      <button onClick={()=>{buyXP(0.5, 3500)}} className="md:my-0 my-4 text-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">3500</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal4}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
@@ -274,7 +271,7 @@ export default function Home() {
               </div>
 
               {/* box5 */}
-              <button onClick={()=>{buyXP(1, 7500)}} className="sm:my-0 my-4 h-full text-center flex items-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-purple-600/30 duration-200">
+              <button onClick={()=>{buyXP(1, 7500)}} className="md:my-0 my-4 h-full text-center flex items-center relative rounded-xl bg-[#7c06d3] group cursor-pointer hover:brightness-110 hover:shadow-2xl hover:shadow-black/30 duration-200">
                         <h3 className="absolute w-full text-xl top-2 z-10">7500</h3>
                           <Image className="group-hover:animate-pulse group-hover:brightness-110" src={crystal5}/>
                           <div className="h-8 flex text-center bg-purple-950/50 w-full rounded-b-xl items-center justify-center absolute bottom-0">
